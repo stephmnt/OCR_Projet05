@@ -1,0 +1,40 @@
+name: Deploy to Hugging Face Spaces
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+
+      - name: Deploy to Hugging Face Space
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+        run: |
+          git config --global user.email "actions@github.com"
+          git config --global user.name "GitHub Actions"
+          git clone https://huggingface.co/spaces/stephmnt/projet_05 hf_space
+          rsync -av --exclude '.git' ./ hf_space/
+          cd hf_space
+          git add .
+          git commit -m "🚀 Auto-deploy from GitHub Actions" || echo "No changes to commit"
+          git push https://stephmnt:$HF_TOKEN@huggingface.co/spaces/stephmnt/projet_05 main
