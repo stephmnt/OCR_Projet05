@@ -47,7 +47,6 @@ pathspec==0.12.1
 pillow==11.3.0
 platformdirs==4.5.0
 pluggy==1.6.0
--e git+ssh://git@github.com/stephmnt/OCR_Projet05.git@05ff07e964ea1c1038d3c2e0876af276387b3a52#egg=projet_05
 pydantic==2.11.10
 pydantic_core==2.33.2
 pydub==0.25.1
