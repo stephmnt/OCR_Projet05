@@ -57,6 +57,11 @@ Déployez un modèle de Machine Learning
     └── plots.py                <- Code to create visualizations
 ```
 
+## Code hérité réutilisé
+
+- `scripts_projet04/brand` : charte graphique OpenClassrooms (classe `Theme`, palettes, YAML). Le module `projet_05/branding.py` en est la porte d'entrée et applique automatiquement le thème.
+- `scripts_projet04/manet_projet04/shap_generator.py` : fonctions `shap_global` / `shap_local` utilisées par `projet_05/modeling/train.py` pour reproduire les visualisations SHAP.
+
 --------
 
 ---

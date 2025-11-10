@@ -1,0 +1,57 @@
+RANDOM_STATE: 42
+PATH_SIRH: datasets/extrait_sirh.csv
+PATH_EVAL: datasets/extrait_eval.csv
+PATH_SONDAGE: datasets/extrait_sondage.csv
+
+COL_ID: id_employee   
+TARGET: a_quitte_l_entreprise
+
+NUM_COLS:
+  - age
+  - revenu_mensuel
+  - annees_dans_l_entreprise
+  - annees_dans_le_poste_actuel
+  - annee_experience_totale
+  - distance_domicile_travail
+  - note_evaluation_actuelle
+  - note_evaluation_precedente
+  - nombre_heures_travailles
+  - augementation_salaire_precedente
+  - nombre_experiences_precedentes
+  - nb_formations_suivies
+  - nombre_participation_pee
+  - nombre_employee_sous_responsabilite
+  - annees_depuis_la_derniere_promotion
+  - annees_sous_responsable_actuel
+  - augmentation_relative
+  - part_experience_dans_poste
+  - formations_par_an_experience
+  - satisfaction_moyenne
+  - temps_depuis_promo_ratio
+  - evolution_note
+
+CAT_COLS:
+  - genre
+  - statut_marital
+  - departement
+  - poste
+  - niveau_hierarchique_poste
+  - niveau_education
+  - domaine_etude
+  - frequence_deplacement
+  - ayant_enfants
+  - heure_supplementaires  
+
+SAT_COLS:
+  - satisfaction_employee_environnement
+  - satisfaction_employee_nature_travail
+  - satisfaction_employee_equipe
+  - satisfaction_employee_equilibre_pro_perso
+
+FIRST_VARS:
+  - age
+  - revenu_mensuel
+  - annees_dans_l_entreprise
+  - note_evaluation_actuelle
+
+SUBSAMPLE_FRAC: 0.10

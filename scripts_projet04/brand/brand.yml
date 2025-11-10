@@ -1,0 +1,26 @@
+primary: "#8F81E5"
+secondary: "#EE8273"
+tertiary: "#A6BD63"
+background: "#FEFBF3"
+primary_variants:
+  - "#A69AF0"
+  - "#5A46C9"
+secondary_variants:
+  - "#F3A093"
+  - "#D95848"
+tertiary_variants:
+  - "#BDD681"
+  - "#7E923F"
+sequential_light:
+  primary: "#f0eefc"
+  secondary: "#fdecea"
+  tertiary: "#f6faec"
+sequential_dark:
+  primary: "#2f1577"
+  secondary: "#8b3025"
+  tertiary: "#4b5c27"
+text_color: "#000000"
+axes_labelcolor: "#000000"
+tick_color: "#000000"
+figure_dpi: 110
+savefig_dpi: 300
