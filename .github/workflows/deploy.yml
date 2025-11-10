@@ -33,7 +33,7 @@ jobs:
           git config --global user.email "actions@github.com"
           git config --global user.name "GitHub Actions"
           git clone https://huggingface.co/spaces/stephmnt/projet_05 hf_space
-          rsync -av --exclude '.git' ./ hf_space/
+          rsync -av --exclude '.git' --exclude 'output/' --exclude 'models/' ./ hf_space/
           cd hf_space
           git add .
           git commit -m "🚀 Auto-deploy from GitHub Actions" || echo "No changes to commit"
