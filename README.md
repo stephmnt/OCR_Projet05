@@ -1,5 +1,17 @@
 # projet_05
 
+---
+title: OCR_Projet05
+emoji: 🔥
+colorFrom: purple
+colorTo: purple
+sdk: gradio
+sdk_version: 5.49.1
+app_file: app.py
+pinned: true
+short_description: Projet 05 formation Openclassrooms
+---
+
 <a target="_blank" href="https://cookiecutter-data-science.drivendata.org/">
     <img src="https://img.shields.io/badge/CCDS-Project%20template-328F97?logo=cookiecutter" />
 </a>
