@@ -30,7 +30,7 @@ def compute_shap_summary(
     y: pd.Series,
     *,
     max_samples: int = 500,
-) -> Tuple[pd.DataFrame | None, object | None]:
+) -> Tuple[pd.DataFrame | None, object | None, pd.DataFrame | None]:
     """
     Reuse the historical `shap_global` helper to build the plots and a tabular summary.
 
@@ -41,8 +41,9 @@ def compute_shap_summary(
     shap_values : shap.Explanation | None
         Objet renvoyé par shap_global pour des analyses locales ultérieures.
     """
+    Path("output").mkdir(parents=True, exist_ok=True)
     cmap = make_diverging_cmap(Theme.PRIMARY, Theme.SECONDARY)
-    shap_values, _, feature_names = shap_global(
+    shap_values, _, feature_names, sample_indices = shap_global(
         pipeline,
         X,
         y,
@@ -51,7 +52,7 @@ def compute_shap_summary(
     )
     if shap_values is None or feature_names is None:
         logger.warning("Impossible de générer les résumés SHAP.")
-        return None, None
+        return None, None, None
 
     shap_array = _shape_array(shap_values)
     if shap_array.ndim == 1:
@@ -62,7 +63,10 @@ def compute_shap_summary(
         .sort_values("mean_abs_shap", ascending=False)
         .reset_index(drop=True)
     )
-    return summary, shap_values
+    X_sample = None
+    if sample_indices is not None:
+        X_sample = X.reindex(sample_indices)
+    return summary, shap_values, X_sample
 
 
 def save_shap_summary(summary: pd.DataFrame, output_path: Path) -> None:
@@ -74,25 +78,26 @@ def save_shap_summary(summary: pd.DataFrame, output_path: Path) -> None:
 def export_local_explanations(
     pipeline,
     shap_values,
-    X: pd.DataFrame,
+    X_sample: pd.DataFrame | None,
     custom_index: int | None = None,
 ) -> None:
     """
     Génère trois cas d'usage par défaut (impact max, risque max, risque min)
     et un indice custom optionnel pour la trace historique.
     """
-    if shap_values is None:
+    if shap_values is None or X_sample is None or X_sample.empty:
         return
 
+    Path("output").mkdir(parents=True, exist_ok=True)
     shap_array = _shape_array(shap_values)
     idx_impact = int(np.argmax(np.sum(np.abs(shap_array), axis=1)))
     shap_local(idx_impact, shap_values)
 
-    y_proba_all = pipeline.predict_proba(X)[:, 1]
-    idx_highrisk = int(np.argmax(y_proba_all))
+    y_proba_sample = pipeline.predict_proba(X_sample)[:, 1]
+    idx_highrisk = int(np.argmax(y_proba_sample))
     shap_local(idx_highrisk, shap_values)
 
-    idx_lowrisk = int(np.argmin(y_proba_all))
+    idx_lowrisk = int(np.argmin(y_proba_sample))
     shap_local(idx_lowrisk, shap_values, text_scale=0.6)
 
     if custom_index is not None:

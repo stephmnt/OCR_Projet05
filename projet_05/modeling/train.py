@@ -222,19 +222,20 @@ def fit_final_pipeline(
     y: pd.Series,
     settings: Settings,
 ):
-    sm = SMOTE(random_state=settings.random_state)
-    X_bal, y_bal = sm.fit_resample(X, y)
-    final_preprocessor = build_preprocessor(settings, X)
-    clf = clone(best_result.best_estimator.named_steps["clf"])
+    tuned_pipeline = clone(best_result.best_estimator)
+    tuned_pipeline.fit(X, y)
+    final_preprocessor = tuned_pipeline.named_steps["prep"]
+    clf = tuned_pipeline.named_steps["clf"]
     final_pipe = Pipeline(
         steps=[
             ("prep", final_preprocessor),
             ("clf", clf),
         ]
     )
-    final_pipe.fit(X_bal, y_bal)
     logger.success(
-        "Modèle {} ré-entraîné sur {} lignes équilibrées.", best_result.name, len(X_bal)
+        "Modèle {} ré-entraîné sur {} lignes (avec rééchantillonnage interne).",
+        best_result.name,
+        len(X),
     )
     return final_pipe
 
@@ -280,10 +281,10 @@ def save_artifacts(
     metadata_path.write_text(json.dumps(metadata, indent=2), encoding="utf-8")
     logger.info("Métadonnées sauvegardées dans {}", metadata_path)
 
-    shap_summary, shap_values = compute_shap_summary(pipeline, X, y)
+    shap_summary, shap_values, shap_sample = compute_shap_summary(pipeline, X, y)
     if shap_summary is not None:
         save_shap_summary(shap_summary, shap_path)
-        export_local_explanations(pipeline, shap_values, X)
+        export_local_explanations(pipeline, shap_values, shap_sample)
 
 
 @app.command()

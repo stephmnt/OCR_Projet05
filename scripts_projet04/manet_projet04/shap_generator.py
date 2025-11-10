@@ -75,7 +75,9 @@ def shap_global(
     print(f"[INFO] {len(feature_names)} variables utilisées.")
 
     # --- Étape 3 : Préparation jeu d’échantillons ---
-    X_sample = X_full.sample(n=min(sample_size, len(X_full)), random_state=RANDOM_STATE)
+    sample_size = min(sample_size, len(X_full))
+    X_sample = X_full.sample(n=sample_size, random_state=RANDOM_STATE)
+    sample_indices = X_sample.index
     X_transformed = final_pipe.named_steps['prep'].transform(X_sample)
 
     # Convertit toute structure hybride (sparse, object) vers un tableau float64
@@ -178,7 +180,7 @@ def shap_global(
         except Exception as e2:
             print(f"[ERREUR] Même le fallback échoue : {e2}")
 
-    return shap_values, X_numeric, feature_names
+    return shap_values, X_numeric, feature_names, sample_indices
 
 
 # === Fonction 2 : SHAP LOCAL ===

@@ -66,7 +66,7 @@ def _harmonize_id_column(df: pd.DataFrame, column: str, *, digits_only: bool = T
         return data
 
     if digits_only:
-        extracted = data[column].astype(str).str.extract(r"(\\d+)")
+        extracted = data[column].astype(str).str.extract(r"(\d+)")
         data[column] = pd.to_numeric(extracted[0], errors="coerce")
     data[column] = pd.to_numeric(data[column], errors="coerce").astype("Int64")
     return data
