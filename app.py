@@ -17,12 +17,30 @@ SCHEMA_PATH = Path("data/processed/schema.json")
 
 
 def _load_schema(path: Path) -> dict[str, Any]:
+    """Load the schema definition stored as JSON.
+
+    Args:
+        path: Path to the schema.json file.
+
+    Returns:
+        A dictionary describing the schema or an empty dict if the file is missing.
+    """
     if not path.exists():
         return {}
     return json.loads(path.read_text(encoding="utf-8"))
 
 
 def _infer_features(metadata: dict, schema: dict, pipeline) -> list[str]:
+    """Infer the ordered list of features expected by the model.
+
+    Args:
+        metadata: Metadata produced during training.
+        schema: Schema derived from `features.py`.
+        pipeline: Loaded sklearn pipeline (optional).
+
+    Returns:
+        List of feature names in the order expected by the model.
+    """
     if schema:
         candidates = schema.get("numerical_features", []) + schema.get("categorical_features", [])
         if candidates:
@@ -37,6 +55,18 @@ def _infer_features(metadata: dict, schema: dict, pipeline) -> list[str]:
 
 
 def _convert_input(payload: Any, headers: list[str]) -> pd.DataFrame:
+    """Normalize any user input into a validated DataFrame.
+
+    Args:
+        payload: Raw table coming from Gradio (DataFrame, list, etc.).
+        headers: Expected column names.
+
+    Returns:
+        A sanitized DataFrame.
+
+    Raises:
+        gr.Error: If no valid row is provided.
+    """
     if isinstance(payload, pd.DataFrame):
         df = payload.copy()
     elif payload is None:
@@ -50,6 +80,7 @@ def _convert_input(payload: Any, headers: list[str]) -> pd.DataFrame:
 
 
 def _ensure_model():
+    """Ensure that a pipeline has been loaded before inference."""
     if PIPELINE is None:
         raise gr.Error(
             "Aucun modèle entrainé n'a été trouvé. Lancez `python projet_05/modeling/train.py` puis relancez l'application."
@@ -57,6 +88,7 @@ def _ensure_model():
 
 
 def score_table(table):
+    """Score data entered via the interactive table."""
     _ensure_model()
     df = _convert_input(table, FEATURE_ORDER)
     drop_cols = [TARGET_COLUMN] if TARGET_COLUMN else None
@@ -70,6 +102,7 @@ def score_table(table):
 
 
 def score_csv(upload):
+    """Score a CSV uploaded by the user."""
     _ensure_model()
     if upload is None:
         raise gr.Error("Veuillez déposer un fichier CSV.")
@@ -85,6 +118,7 @@ def score_csv(upload):
 
 
 def predict_from_form(*values):
+    """Score a single row coming from the form tab."""
     _ensure_model()
     if not FEATURE_ORDER:
         raise gr.Error("Impossible de générer le formulaire sans configuration des features.")
@@ -132,7 +166,7 @@ with gr.Blocks(title="Prédicteur d'attrition") as demo:
 
     if PIPELINE is None:
         gr.Markdown(
-            "⚠️ **Aucun modèle disponible.** Lancez les scripts `dataset.py`, `features.py` puis `modeling/train.py`."
+            "**Aucun modèle disponible.** Lancez les scripts `dataset.py`, `features.py` puis `modeling/train.py`."
         )
     else:
         gr.Markdown(f"Seuil de décision actuel : **{THRESHOLD:.2f}**")

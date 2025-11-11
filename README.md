@@ -305,10 +305,6 @@ Project Link: [https://github.com/github_username/repo_name](https://github.com/
 [stars-url]: https://github.com/stephmnt/OCR_projet05/stargazers
 [issues-shield]: https://img.shields.io/github/issues/stephmnt/OCR_projet05.svg?style=for-the-badge
 [issues-url]: https://github.com/stephmnt/OCR_projet05/issues
-[license-shield]: https://img.shields.io/github/license/stephmnt/OCR_projet05.svg?style=for-the-badge
-[license-url]: https://github.com/stephmnt/OCR_projet05/blob/master/LICENSE.txt
-[linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
-[linkedin-url]: https://linkedin.com/in/stephanemanet
 [product-screenshot]: images/screenshot.png
 [Noobie]: https://img.shields.io/badge/Data%20Science%20for%20Beginners-84CC16?style=for-the-badge&labelColor=E5E7EB&color=84CC16
 <!-- Shields.io badges. You can a comprehensive list with many more badges at: https://github.com/inttter/md-badges -->
@@ -328,10 +324,14 @@ Project Link: [https://github.com/github_username/repo_name](https://github.com/
 [Bootstrap-url]: https://getbootstrap.com
 [JQuery.com]: https://img.shields.io/badge/jQuery-0769AD?style=for-the-badge&logo=jquery&logoColor=white
 [JQuery-url]: https://jquery.com 
+<!-- OK -->
+[license-shield]: https://img.shields.io/github/license/stephmnt/OCR_projet05.svg?style=for-the-badge
+[license-url]: https://github.com/stephmnt/OCR_Projet05/blob/main/LICENSE
+[linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
+[linkedin-url]: https://linkedin.com/in/stephanemanet
 <!-- TODO: -->
-[Postgres]: https://img.shields.io/badge/Postgres-%23316192.svg?logo=postgresql&logoColor=white
-[Python]: https://img.shields.io/badge/Python-3776AB?logo=python&logoColor=fff)
-[MkDocs]: https://img.shields.io/badge/MkDocs-526CFE?logo=materialformkdocs&logoColor=fff
+[postgres-shield]: https://img.shields.io/badge/Postgres-%23316192.svg?logo=postgresql&logoColor=white
+[python-shield]: https://img.shields.io/badge/Python-3776AB?logo=python&logoColor=fff)
 [mkdocs-shield]: https://img.shields.io/badge/MkDocs-526CFE?logo=materialformkdocs&logoColor=fff
 [mkdocs-url]: https://stephmnt.github.io/OCR_Projet05/
 [NumPy]: https://img.shields.io/badge/NumPy-4DABCF?logo=numpy&logoColor=fff
