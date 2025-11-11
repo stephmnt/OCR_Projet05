@@ -6,6 +6,9 @@
 *.code-workspace
 *.pdf
 /output/
+questions.md
+*.pdf
+
 
 # vim
 *.swp
