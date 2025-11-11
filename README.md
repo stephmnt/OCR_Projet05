@@ -8,6 +8,7 @@ sdk_version: 5.49.1
 app_file: app.py
 pinned: true
 short_description: Projet 05 formation Openclassrooms
+python_version: 3.11
 ---
 
 # projet_05 : Déployez un modèle de Machine Learning
