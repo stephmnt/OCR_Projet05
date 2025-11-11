@@ -10,13 +10,14 @@ pinned: true
 short_description: Projet 05 formation Openclassrooms
 ---
 
-# projet_05
+# projet_05 : Déployez un modèle de Machine Learning
 
 <a target="_blank" href="https://cookiecutter-data-science.drivendata.org/">
     <img src="https://img.shields.io/badge/CCDS-Project%20template-328F97?logo=cookiecutter" />
 </a>
-[![MkDocs][mkdocs-shield]][mkdocs-url]
-Déployez un modèle de Machine Learning
+
+[![mkdocs-shield]][mkdocs-url]
+
 
 ## Organisation du projet
 
