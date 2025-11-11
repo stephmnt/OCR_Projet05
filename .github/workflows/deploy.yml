@@ -1,4 +1,4 @@
-name: Deploy to Hugging Face Spaces
+name: Deploiement vers Hugging Face Spaces
 
 on:
   push:
@@ -26,6 +26,9 @@ jobs:
           python -m pip install --upgrade pip
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
+      - name: Préparer les données et le modèle
+        run: python main.py
+
       - name: Deploy to Hugging Face Space
         env:
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
@@ -33,7 +36,7 @@ jobs:
           git config --global user.email "actions@github.com"
           git config --global user.name "GitHub Actions"
           git clone https://huggingface.co/spaces/stephmnt/projet_05 hf_space
-          rsync -av --exclude '.git' --exclude 'output/' --exclude 'models/' ./ hf_space/
+          rsync -av --exclude '.git' --exclude 'docs' --exclude 'models/' ./ hf_space/
           cd hf_space
           git add .
           git commit -m "🚀 Auto-deploy from GitHub Actions" || echo "No changes to commit"

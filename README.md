@@ -15,7 +15,7 @@ short_description: Projet 05 formation Openclassrooms
 <a target="_blank" href="https://cookiecutter-data-science.drivendata.org/">
     <img src="https://img.shields.io/badge/CCDS-Project%20template-328F97?logo=cookiecutter" />
 </a>
-
+[![MkDocs][mkdocs-shield]][mkdocs-url]
 Déployez un modèle de Machine Learning
 
 ## Organisation du projet
@@ -332,5 +332,7 @@ Project Link: [https://github.com/github_username/repo_name](https://github.com/
 [Postgres]: https://img.shields.io/badge/Postgres-%23316192.svg?logo=postgresql&logoColor=white
 [Python]: https://img.shields.io/badge/Python-3776AB?logo=python&logoColor=fff)
 [MkDocs]: https://img.shields.io/badge/MkDocs-526CFE?logo=materialformkdocs&logoColor=fff
+[mkdocs-shield]: https://img.shields.io/badge/MkDocs-526CFE?logo=materialformkdocs&logoColor=fff
+[mkdocs-url]: https://stephmnt.github.io/OCR_Projet05/
 [NumPy]: https://img.shields.io/badge/NumPy-4DABCF?logo=numpy&logoColor=fff
 [![Pandas](https://img.shields.io/badge/Pandas-150458?logo=pandas&logoColor=fff)](#)

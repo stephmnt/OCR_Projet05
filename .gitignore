@@ -7,7 +7,7 @@
 *.pdf
 /output/
 questions.md
-
+/reports/
 # vim
 *.swp
 *.swo

@@ -9,10 +9,13 @@ try:
 except ImportError:  # pragma: no cover - rétrocompat
     from shap.plots._style import style_context
 from matplotlib.colors import Colormap, LinearSegmentedColormap
+from pathlib import Path
 
 from projet_05.branding import Theme, apply_brand_theme
+from projet_05.config import FIGURES_DIR
 
 apply_brand_theme()
+FIGURES_DIR.mkdir(parents=True, exist_ok=True)
 DEFAULT_CMAP = Theme.colormap(
     "diverging",
     start="primary",
@@ -145,7 +148,7 @@ def shap_global(
             max_display=max_display,
             show=False,
             cmap=summary_cmap,
-            color=Theme.PRIMARY if plot_type == "bar" else None
+            color=Theme.PRIMARY if plot_type == "bar" else None,
         )
         fig = plt.gcf()
         ax = plt.gca()
@@ -153,9 +156,9 @@ def shap_global(
         ax.set_facecolor(Theme.BACKGROUND)
         plt.title(f"SHAP Summary Plot ({plot_type}) – Importance globale", fontsize=11)
         plt.tight_layout()
-        plt.savefig(f"output/shap_summary_{plot_type}.png", dpi=300)
-        plt.show()
-        plt.close()
+        summary_path = FIGURES_DIR / f"shap_summary_{plot_type}.png"
+        plt.savefig(summary_path, dpi=300)
+        plt.close(fig)
     except Exception as e:
         print(f"[AVERTISSEMENT] Plot détaillé échoué ({e}) → fallback barplot.")
         try:
@@ -166,7 +169,7 @@ def shap_global(
                 plot_type="bar",
                 max_display=max_display,
                 show=False,
-                color=Theme.PRIMARY
+                color=Theme.PRIMARY,
             )
             fig = plt.gcf()
             ax = plt.gca()
@@ -174,9 +177,9 @@ def shap_global(
             ax.set_facecolor(Theme.BACKGROUND)
             plt.title("SHAP Summary Plot – (fallback barplot)", fontsize=11)
             plt.tight_layout()
-            plt.savefig(f"output/shap_summary_fallback_barplot.png", dpi=300)
-            plt.show()
-            plt.close()
+            fallback_path = FIGURES_DIR / "shap_summary_fallback_barplot.png"
+            plt.savefig(fallback_path, dpi=300)
+            plt.close(fig)
         except Exception as e2:
             print(f"[ERREUR] Même le fallback échoue : {e2}")
 
@@ -241,6 +244,6 @@ def shap_local(idx, shap_values, max_display=10, text_scale=0.6, cmap=DEFAULT_CM
         
     plt.title(f"Explication locale SHAP – individu {idx}", fontsize=9, pad=10)
     plt.tight_layout()
-    plt.savefig(f"output/shap_local_individu_{idx}.png", dpi=300)
-    plt.show()
-    plt.close()
+    local_path = FIGURES_DIR / f"shap_local_individu_{idx}.png"
+    plt.savefig(local_path, dpi=300)
+    plt.close(fig)
