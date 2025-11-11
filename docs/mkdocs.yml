@@ -1,4 +1,20 @@
-site_name: projet_05
-# 
+site_name: Documentation du projet
 site_author: Stéphane Manet
-# 
+theme:
+  name: mkdocs
+
+plugins:
+  - search
+  - mkdocstrings:
+      handlers:
+        python:
+          options:
+            show_source: true
+            docstring_style: google
+            merge_init_into_class: true
+
+nav:
+  - Accueil: index.md
+  - Guide de démarrage: getting-started.md
+  - Référence API:
+      - Greeter: greeter.md

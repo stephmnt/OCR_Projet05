@@ -1,10 +1,5 @@
-# projet_05 documentation!
+# Déployez un modèle de Machine Learning
 
 ## Description
 
-Déployez un modèle de Machine Learning
-
-## Commands
-
-The Makefile contains the central entry points for common tasks related to this project.
-
+Cette documentation présente la réalisation du projet 05 du master Data scientist Machine Learning
