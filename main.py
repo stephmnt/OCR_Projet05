@@ -7,6 +7,8 @@ from pathlib import Path
 
 from loguru import logger
 
+from projet_05.settings import load_settings
+
 PIPELINE_STEPS = [
     ("Préparation des données brutes", "projet_05.dataset"),
     ("Feature engineering", "projet_05.features"),
@@ -54,10 +56,29 @@ def main() -> None:
     logger.add(log_file, level="INFO", enqueue=True)
     logger.info("Début d'exécution du pipeline (log: {})", log_file)
 
+    if not _raw_data_available():
+        logger.warning("Données brutes introuvables. Pipeline ignoré.")
+        return
+
     for label, module in PIPELINE_STEPS:
         run_step(label, module)
 
     logger.success("Pipeline exécuté avec succès. Logs disponibles dans {}", log_file)
+
+
+def _raw_data_available() -> bool:
+    """Verify that the required raw CSV files exist on disk."""
+    settings = load_settings()
+    required = [
+        Path(settings.path_sirh),
+        Path(settings.path_eval),
+        Path(settings.path_sondage),
+    ]
+    missing = [path for path in required if not path.exists()]
+    if missing:
+        logger.warning("Fichiers absents: {}", ", ".join(map(str, missing)))
+        return False
+    return True
 
 
 if __name__ == "__main__":

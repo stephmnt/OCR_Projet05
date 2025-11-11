@@ -1,16 +1,17 @@
-# Data
-/data/
-
-# Mac OS-specific storage files
+# Spécifique à ce projet
 .DS_Store
 *.code-workspace
 *.pdf
 /output/
 questions.md
 /reports/
+/data/
+runtime.txt
+
 # vim
 *.swp
 *.swo
+
 
 ## https://github.com/github/gitignore/blob/e8554d85bf62e38d6db966a50d2064ac025fd82a/Python.gitignore
 
