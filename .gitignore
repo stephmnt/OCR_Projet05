@@ -7,8 +7,6 @@
 *.pdf
 /output/
 questions.md
-*.pdf
-
 
 # vim
 *.swp
@@ -86,9 +84,6 @@ instance/
 # Scrapy stuff:
 .scrapy
 
-# MkDocs documentation
-docs/site/
-
 # PyBuilder
 .pybuilder/
 target/
@@ -165,9 +160,6 @@ venv.bak/
 
 # Rope project settings
 .ropeproject
-
-# mkdocs documentation
-/site
 
 # mypy
 .mypy_cache/
