@@ -17,4 +17,6 @@ nav:
   - Accueil: index.md
   - Guide de démarrage: getting-started.md
   - Référence API:
+      - main: main.md
+      - app: app.md
       - Greeter: greeter.md
