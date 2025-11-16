@@ -5,11 +5,14 @@ from pathlib import Path
 from typing import Any
 
 import gradio as gr
+import numpy as np
 import pandas as pd
 from loguru import logger
 
 from projet_05.branding import apply_brand_theme
 from projet_05.modeling.predict import load_metadata, load_pipeline, run_inference
+from projet_05.settings import load_settings
+from projet_05 import dataset as ds
 
 MODEL_PATH = Path("models/best_model.joblib")
 METADATA_PATH = Path("models/best_model_meta.json")
@@ -28,6 +31,9 @@ SATISFACTION_COLUMNS = [
     "satisfaction_employee_equipe",
     "satisfaction_employee_equilibre_pro_perso",
 ]
+NUMERIC_CODE_COLUMNS = ["niveau_hierarchique_poste", "niveau_education"]
+NUMERIC_FEATURES: set[str] = set()
+CATEGORICAL_FEATURES: set[str] = set()
 
 # Configuration manuelle des champs d'entrée (label + placeholder).
 FIELD_UI_CONFIG = [
@@ -119,14 +125,13 @@ FIELD_UI_CONFIG = [
         "choices": ["Aucun", "Occasionnel", "Frequent"],
     },
     {
-        "name": "etat_civil",
+        "name": "statut_marital",
         "label": "Statut marital",
         "component": "dropdown",
         "choices": ["Célibataire", "Marié(e)", "Divorcé(e)"],
     },
-    {"name": "niveau_etudes", "label": "Niveau d'études", "placeholder": "Ex : Licence, Master"},
     {
-        "name": "role",
+        "name": "poste",
         "label": "Poste occupé",
         "component": "dropdown",
         "choices": [
@@ -141,9 +146,50 @@ FIELD_UI_CONFIG = [
             "Ressources Humaines",
         ],
     },
-    {"name": "type_contrat", "label": "Type de contrat", "placeholder": "Ex : CDI, CDD"},
+    {
+        "name": "niveau_hierarchique_poste",
+        "label": "Niveau hiérarchique",
+        "component": "dropdown",
+        "choices": [
+            "1, junior",
+            "2",
+            "3",
+            "4",
+            "5, senior",
+        ],
+        "info": "Valeur numérique issue du SIRH (1 à 5)",
+    },
+    {
+        "name": "niveau_education",
+        "label": "Niveau d'études",
+        "component": "dropdown",
+        "choices": [
+            "1, licence",
+            "2",
+            "3",
+            "4",
+            "5, master",
+        ],
+        "info": "Indice numérique (1 à 5) figurant dans les exports bruts",
+    },
+    {
+        "name": "domaine_etude",
+        "label": "Domaine d'étude",
+        "component": "dropdown",
+        "choices": ["Entrepreunariat", "Infra & Cloud", "Marketing", "Ressources Humaines", "Transformation Digitale"],
+    },
+    {
+        "name": "heure_supplementaires",
+        "label": "Heures supplémentaires",
+        "component": "dropdown",
+        "choices": ["Oui", "Non"],
+    },
 ]
 FIELD_UI_LOOKUP = {cfg["name"]: cfg for cfg in FIELD_UI_CONFIG}
+try:
+    SETTINGS = load_settings()
+except Exception:  # pragma: no cover - remains optional when config absent
+    SETTINGS = None
 CATEGORICAL_NORMALIZERS: dict[str, dict[str, str]] = {
     "genre": {
         "f": "F",
@@ -151,7 +197,7 @@ CATEGORICAL_NORMALIZERS: dict[str, dict[str, str]] = {
         "m": "M",
         "homme": "M",
     },
-    "etat_civil": {
+    "statut_marital": {
         "célibataire": "Célibataire",
         "celibataire": "Célibataire",
         "marié(e)": "Marié(e)",
@@ -166,7 +212,7 @@ CATEGORICAL_NORMALIZERS: dict[str, dict[str, str]] = {
         "consulting": "Consulting",
         "ressources humaines": "Ressources Humaines",
     },
-    "role": {
+    "poste": {
         "cadre commercial": "Cadre Commercial",
         "assistant de direction": "Assistant de Direction",
         "consultant": "Consultant",
@@ -177,6 +223,42 @@ CATEGORICAL_NORMALIZERS: dict[str, dict[str, str]] = {
         "representant commercial": "Représentant Commercial",
         "directeur technique": "Directeur Technique",
         "ressources humaines": "Ressources Humaines",
+    },
+    "frequence_deplacement": {
+        "aucun": "Aucun",
+        "aucune": "Aucun",
+        "occasionnel": "Occasionnel",
+        "occasionnelle": "Occasionnel",
+        "frequent": "Frequent",
+        "fréquent": "Frequent",
+    },
+    "domaine_etude": {
+        "entrepreunariat": "Entrepreunariat",
+        "infra & cloud": "Infra & Cloud",
+        "infra et cloud": "Infra & Cloud",
+        "marketing": "Marketing",
+        "ressources humaines": "Ressources Humaines",
+        "transformation digitale": "Transformation Digitale",
+    },
+    "heure_supplementaires": {
+        "oui": "Oui",
+        "o": "Oui",
+        "y": "Oui",
+        "non": "Non",
+        "n": "Non",
+    },
+    "niveau_hierarchique_poste": {
+        "junior": "Junior",
+        "confirmé": "Confirmé",
+        "confirme": "Confirmé",
+        "direction": "Direction",
+        "senior": "Senior",
+    },
+    "niveau_education": {
+        "licence": "Licence",
+        "master": "Master",
+        "doctorat": "Doctorat",
+        "bts": "BTS",
     },
 }
 
@@ -219,6 +301,16 @@ def _infer_features(metadata: dict, schema: dict, pipeline) -> list[str]:
     return []
 
 
+def _ensure_settings():
+    """Ensure configuration settings are available for data fusion."""
+
+    if SETTINGS is None:
+        raise gr.Error(
+            "Configuration introuvable. Placez `projet_05/settings.yml` dans le dépôt ou renseignez PROJET05_SETTINGS."
+        )
+    return SETTINGS
+
+
 def _convert_input(payload: Any, headers: list[str]) -> pd.DataFrame:
     """Normalize any user input into a validated DataFrame.
 
@@ -242,6 +334,17 @@ def _convert_input(payload: Any, headers: list[str]) -> pd.DataFrame:
     if df.empty:
         raise gr.Error("Merci de saisir au moins une ligne complète.")
     return df
+
+
+def _read_uploaded_csv(upload, label: str) -> pd.DataFrame:
+    """Load an uploaded CSV file or raise a user-friendly error."""
+
+    if upload is None:
+        raise gr.Error(f"Veuillez déposer le fichier {label}.")
+    try:
+        return pd.read_csv(upload.name)
+    except Exception as exc:  # pragma: no cover - delegated to pandas
+        raise gr.Error(f"Impossible de lire le fichier {label}: {exc}") from exc
 
 
 def _resolve_field_ui(feature: str) -> tuple[str, str, str | None, str, dict[str, Any]]:
@@ -291,6 +394,18 @@ def _normalize_categorical_values(df: pd.DataFrame) -> pd.DataFrame:
         if column not in normalized.columns:
             continue
         normalized[column] = normalized[column].apply(lambda v, m=mapping: _normalize_value(v, m))
+    for column in NUMERIC_CODE_COLUMNS:
+        if column in normalized.columns:
+            extracted = (
+                normalized[column]
+                .astype(str)
+                .str.extract(r"(-?\d+(?:[.,]\d+)?)")[0]
+                .str.replace(",", ".", regex=False)
+            )
+            normalized[column] = pd.to_numeric(extracted, errors="coerce")
+    numeric_targets = [col for col in NUMERIC_FEATURES.union(DERIVED_FEATURES).union(NUMERIC_CODE_COLUMNS) if col in normalized.columns]
+    for column in numeric_targets:
+        normalized[column] = pd.to_numeric(normalized[column], errors="coerce")
     return normalized
 
 
@@ -333,7 +448,37 @@ def _apply_derived_features(df: pd.DataFrame) -> pd.DataFrame:
             enriched["note_evaluation_actuelle"], errors="coerce"
         ) - pd.to_numeric(enriched["note_evaluation_precedente"], errors="coerce")
 
-    return enriched
+    return enriched.replace({pd.NA: np.nan})
+
+
+def _merge_raw_sources(sirh_upload, evaluation_upload, sond_upload) -> pd.DataFrame:
+    """Merge raw SIRH / evaluation / sondage CSVs uploaded by the user."""
+
+    settings = _ensure_settings()
+    sirh = ds.clean_text_values(_read_uploaded_csv(sirh_upload, "SIRH")).pipe(
+        ds._harmonize_id_column, settings.col_id, digits_only=True
+    )
+    evaluation = (
+        ds.clean_text_values(_read_uploaded_csv(evaluation_upload, "évaluation"))
+        .pipe(ds._rename_column, "eval_number", settings.col_id)
+        .pipe(ds._harmonize_id_column, settings.col_id, digits_only=True)
+    )
+    sond = (
+        ds.clean_text_values(_read_uploaded_csv(sond_upload, "sondage"))
+        .pipe(ds._rename_column, "code_sondage", settings.col_id)
+        .pipe(ds._harmonize_id_column, settings.col_id, digits_only=True)
+    )
+
+    for label, frame in {"SIRH": sirh, "évaluation": evaluation, "sondage": sond}.items():
+        if frame.empty:
+            raise gr.Error(f"Le fichier {label} est vide ou invalide.")
+        if settings.col_id not in frame.columns:
+            raise gr.Error(f"La colonne {settings.col_id} est absente du fichier {label}.")
+
+    merged = sirh.merge(evaluation, on=settings.col_id, how="inner").merge(sond, on=settings.col_id, how="inner")
+    if merged.empty:
+        raise gr.Error("Aucune ligne résultante après fusion des trois fichiers (jointure INNER vide).")
+    return merged
 
 
 def _ensure_model():
@@ -367,6 +512,22 @@ def score_csv(upload):
         raise gr.Error("Veuillez déposer un fichier CSV.")
     df = pd.read_csv(upload.name)
     df = _apply_derived_features(df)
+    drop_cols = [TARGET_COLUMN] if TARGET_COLUMN else None
+    return run_inference(
+        df,
+        PIPELINE,
+        THRESHOLD,
+        drop_columns=drop_cols,
+        required_features=FEATURE_ORDER or None,
+    )
+
+
+def score_raw_files(sirh_upload, evaluation_upload, sond_upload):
+    """Score three raw CSVs (SIRH, évaluation, sondage) after merging them."""
+
+    _ensure_model()
+    merged = _merge_raw_sources(sirh_upload, evaluation_upload, sond_upload)
+    df = _apply_derived_features(merged)
     drop_cols = [TARGET_COLUMN] if TARGET_COLUMN else None
     return run_inference(
         df,
@@ -421,6 +582,14 @@ FEATURE_ORDER = _infer_features(METADATA, SCHEMA, PIPELINE)
 INPUT_FEATURES = [feature for feature in FEATURE_ORDER if feature not in DERIVED_FEATURES]
 if not INPUT_FEATURES:
     INPUT_FEATURES = FEATURE_ORDER
+numeric_from_schema = set(SCHEMA.get("numerical_features", []))
+categorical_from_schema = set(SCHEMA.get("categorical_features", []))
+if not numeric_from_schema:
+    numeric_from_schema = set((METADATA.get("features", {}).get("numerical") or []))
+if not categorical_from_schema:
+    categorical_from_schema = set((METADATA.get("features", {}).get("categorical") or []))
+NUMERIC_FEATURES = numeric_from_schema
+CATEGORICAL_FEATURES = categorical_from_schema
 
 with gr.Blocks(title="Prédicteur d'attrition") as demo:
     gr.Markdown("# OCR Projet 5 – Prédiction de départ employé")
@@ -448,8 +617,6 @@ with gr.Blocks(title="Prédicteur d'attrition") as demo:
                 inputs=form_inputs,
                 outputs=form_output,
             )
-
-    with gr.Tab("Tableau interactif"):
         table_input = gr.Dataframe(
             headers=INPUT_FEATURES if INPUT_FEATURES else None,
             row_count=(1, "dynamic"),
@@ -463,14 +630,29 @@ with gr.Blocks(title="Prédicteur d'attrition") as demo:
             outputs=table_output,
         )
 
-    with gr.Tab("Fichier CSV"):
-        gr.Markdown("Un exemple complet de fichier à importer est disponible dans le dépôt github : [`references/sample_employees.csv`](https://github.com/stephmnt/OCR_Projet05/blob/main/references/sample_employees.csv)")
+    with gr.Tab("Fichier CSV fusionné"):
+        gr.Markdown("Un exemple de fichier à importer est disponible dans le dépôt github : [`references/sample_employees.csv`](https://github.com/stephmnt/OCR_Projet05/blob/main/references/sample_employees.csv)")
         file_input = gr.File(file_types=[".csv"], label="Déposez votre fichier CSV")
         file_output = gr.Dataframe(label="Résultats CSV", type="pandas")
         gr.Button("Scorer le fichier").click(
             fn=score_csv,
             inputs=file_input,
             outputs=file_output,
+        )
+
+    with gr.Tab("Fichiers non-mergés"):
+        gr.Markdown(
+            "Téléversez directement les trois fichiers bruts (SIRH, évaluation, sondage). "
+            "L'application reproduira automatiquement la fusion puis le scoring."
+        )
+        sirh_input = gr.File(file_types=[".csv"], label="Fichier SIRH")
+        evaluation_input = gr.File(file_types=[".csv"], label="Fichier Évaluation")
+        sond_input = gr.File(file_types=[".csv"], label="Fichier Sondage")
+        raw_output = gr.Dataframe(label="Résultats fusion automatique", type="pandas")
+        gr.Button("Fusionner et scorer").click(
+            fn=score_raw_files,
+            inputs=[sirh_input, evaluation_input, sond_input],
+            outputs=raw_output,
         )
 
 

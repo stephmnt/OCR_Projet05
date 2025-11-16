@@ -1,28 +1,27 @@
 {
-  "best_model": "RF_balanced",
-  "best_threshold": 0.4335971869523425,
+  "best_model": "LogReg_balanced",
+  "best_threshold": 0.6751170394620367,
   "best_params": {
-    "clf__max_depth": 8,
-    "clf__min_samples_leaf": 8,
-    "clf__min_samples_split": 5,
-    "clf__n_estimators": 200
+    "clf__C": 0.1,
+    "clf__penalty": "l2",
+    "clf__solver": "lbfgs"
   },
   "metrics": {
-    "f1": 0.476,
-    "recall": 0.5021097046413502,
-    "precision": 0.4524714828897338,
-    "roc_auc": 0.7628609853501289
+    "f1": 0.5816733067729084,
+    "recall": 0.6160337552742616,
+    "precision": 0.5509433962264151,
+    "roc_auc": 0.8373525516646647
   },
   "all_results": [
     {
       "model": "LogReg_balanced",
       "metrics": {
-        "f1": 0.46484375,
-        "recall": 0.5021097046413502,
-        "precision": 0.43272727272727274,
-        "roc_auc": 0.7676381916426266
+        "f1": 0.5816733067729084,
+        "recall": 0.6160337552742616,
+        "precision": 0.5509433962264151,
+        "roc_auc": 0.8373525516646647
       },
-      "best_threshold": 0.6660806744221894,
+      "best_threshold": 0.6751170394620367,
       "best_params": {
         "clf__C": 0.1,
         "clf__penalty": "l2",
@@ -32,17 +31,17 @@
     {
       "model": "RF_balanced",
       "metrics": {
-        "f1": 0.476,
-        "recall": 0.5021097046413502,
-        "precision": 0.4524714828897338,
-        "roc_auc": 0.7628609853501289
+        "f1": 0.5502846299810247,
+        "recall": 0.6118143459915611,
+        "precision": 0.5,
+        "roc_auc": 0.8236232166750507
       },
-      "best_threshold": 0.4335971869523425,
+      "best_threshold": 0.3772601797945009,
       "best_params": {
-        "clf__max_depth": 8,
+        "clf__max_depth": 10,
         "clf__min_samples_leaf": 8,
         "clf__min_samples_split": 5,
-        "clf__n_estimators": 200
+        "clf__n_estimators": 300
       }
     }
   ],
@@ -67,7 +66,10 @@
       "note_evaluation_precedente",
       "annees_depuis_le_changement_deposte",
       "annee_experience_totale",
+      "augementation_salaire_precedente",
+      "nombre_experiences_precedentes",
       "nb_formations_suivies",
+      "nombre_employee_sous_responsabilite",
       "satisfaction_employee_environnement",
       "satisfaction_employee_nature_travail",
       "satisfaction_employee_equipe",
@@ -81,12 +83,14 @@
     ],
     "categorical": [
       "genre",
+      "statut_marital",
       "departement",
+      "poste",
+      "niveau_hierarchique_poste",
+      "niveau_education",
+      "domaine_etude",
       "frequence_deplacement",
-      "etat_civil",
-      "niveau_etudes",
-      "role",
-      "type_contrat"
+      "heure_supplementaires"
     ]
   },
   "target": "a_quitte_l_entreprise"

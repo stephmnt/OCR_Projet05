@@ -22,7 +22,10 @@ num_cols:
   - note_evaluation_precedente
   - annees_depuis_le_changement_deposte
   - annee_experience_totale
+  - augementation_salaire_precedente
+  - nombre_experiences_precedentes
   - nb_formations_suivies
+  - nombre_employee_sous_responsabilite
   - satisfaction_employee_environnement
   - satisfaction_employee_nature_travail
   - satisfaction_employee_equipe
@@ -36,12 +39,14 @@ num_cols:
 
 cat_cols:
   - genre
+  - statut_marital
   - departement
+  - poste
+  - niveau_hierarchique_poste
+  - niveau_education
+  - domaine_etude
   - frequence_deplacement
-  - etat_civil
-  - niveau_etudes
-  - role
-  - type_contrat
+  - heure_supplementaires
 
 sat_cols:
   - satisfaction_employee_environnement

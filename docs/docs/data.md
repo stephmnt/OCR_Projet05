@@ -1,8 +1,7 @@
 # Données attendues
 
 L’interface Gradio expose trois modes d’entrée (formulaire, tableau interactif, import CSV).  
-Dans tous les cas, il faut fournir les colonnes « brutes » ci-dessous ; l’application se charge ensuite
-de recalculer toutes les features dérivées (ratios, moyennes de satisfaction, etc.).
+Dans tous les cas, il faut fournir les colonnes « brutes » ci-dessous ; l’application se charge ensuite de recalculer toutes les features dérivées (ratios, moyennes de satisfaction, etc.).
 
 ## Champs numériques
 
@@ -15,11 +14,13 @@ de recalculer toutes les features dérivées (ratios, moyennes de satisfaction, 
 | `annees_depuis_la_derniere_promotion` | Temps depuis la dernière promotion | Nombre d’années |
 | `distance_domicile_travail` | Distance domicile ↔ travail | Kilomètres |
 | `nombre_participation_pee` | Participations au PEE | Entier |
+| `nombre_experiences_precedentes` | Nombre d’expériences professionnelles antérieures | Entier |
 | `note_evaluation_actuelle` | Dernière note d’évaluation | Score de 1 à 5 |
 | `note_evaluation_precedente` | Note d’évaluation précédente | Score de 1 à 5 |
-| `annees_depuis_le_changement_deposte` | Temps écoulé depuis le dernier changement de poste | Nombre d’années |
 | `annee_experience_totale` | Expérience cumulée | Nombre d’années |
 | `nb_formations_suivies` | Formations suivies | Entier |
+| `nombre_employee_sous_responsabilite` | Nombre de collaborateurs supervisés | Entier |
+| `augementation_salaire_precedente` | Dernière augmentation, exprimée en % | Valeur décimale ou pourcentage (ex : `5%`) |
 | `satisfaction_employee_environnement` | Satisfaction vis-à-vis de l’environnement | Score de 1 (faible) à 5 (forte) |
 | `satisfaction_employee_nature_travail` | Satisfaction vis-à-vis des missions | Score de 1 à 5 |
 | `satisfaction_employee_equipe` | Satisfaction vis-à-vis de l’équipe | Score de 1 à 5 |
@@ -31,11 +32,13 @@ de recalculer toutes les features dérivées (ratios, moyennes de satisfaction, 
 | --- | --- | --- |
 | `genre` | `Femme`, `Homme` | Converties vers `F` / `M` |
 | `frequence_deplacement` | `Aucun`, `Occasionnel`, `Frequent` | Valeurs identiques |
-| `etat_civil` | `Célibataire`, `Marié(e)`, `Divorcé(e)` | Valeurs identiques |
+| `statut_marital` | `Célibataire`, `Marié(e)`, `Divorcé(e)` | Valeurs identiques |
 | `departement` | `Commercial`, `Consulting`, `Ressources Humaines` | Valeurs identiques |
-| `role` | `Cadre Commercial`, `Assistant de Direction`, `Consultant`, `Tech Lead`, `Manager`, `Senior Manager`, `Représentant Commercial`, `Directeur Technique`, `Ressources Humaines` | Valeurs identiques |
-| `niveau_etudes` | Saisie libre (ex : `Licence`, `Master`, `Doctorat`) | Texte libre |
-| `type_contrat` | Saisie libre (ex : `CDI`, `CDD`) | Texte libre |
+| `poste` | `Cadre Commercial`, `Assistant de Direction`, `Consultant`, `Tech Lead`, `Manager`, `Senior Manager`, `Représentant Commercial`, `Directeur Technique`, `Ressources Humaines` | Valeurs identiques |
+| `niveau_hierarchique_poste` | Saisie libre (ex : `Junior`, `Senior`, `Direction`) | Texte libre |
+| `niveau_education` | Saisie libre (ex : `Licence`, `Master`, `Doctorat`) | Texte libre |
+| `domaine_etude` | `Entrepreunariat`, `Infra & Cloud`, `Marketing`, `Ressources Humaines`, `Transformation Digitale` | Valeurs identiques |
+| `heure_supplementaires` | `Oui`, `Non` | Valeurs identiques |
 
 ## Colonnes calculées automatiquement
 
