@@ -8,7 +8,10 @@ paths:
   evaluation: ../data/raw/extrait_eval.csv
   sondage: ../data/raw/extrait_sondage.csv
   sql_file: ../reports/merge_sql.sql
-  db_file: ../data/interim/merge_temp.db
+
+database:
+  url: postgresql+psycopg://postgres:postgres@localhost:5432/projet05
+  schema: public
 
 num_cols:
   - age

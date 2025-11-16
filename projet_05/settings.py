@@ -25,7 +25,8 @@ class Settings:
     first_vars: tuple[str, ...] = ()
     subsample_frac: float = 1.0
     sql_file: Path = field(default_factory=lambda: Path("merge_sql.sql"))
-    db_file: Path = field(default_factory=lambda: Path("merge_temp.db"))
+    db_url: str | None = None
+    db_schema: str | None = None
 
     def as_dict(self) -> dict:
         """Return a serializable representation (useful for logging/tests)."""
@@ -42,7 +43,8 @@ class Settings:
             "first_vars": list(self.first_vars),
             "subsample_frac": self.subsample_frac,
             "sql_file": str(self.sql_file),
-            "db_file": str(self.db_file),
+            "db_url": self.db_url,
+            "db_schema": self.db_schema,
         }
 
 
@@ -96,6 +98,10 @@ def load_settings(custom_path: str | os.PathLike[str] | None = None) -> Settings
     payload = _load_raw_settings(raw_path)
     paths_block = payload.get("paths", {})
 
+    database_block = payload.get("database", {})
+    db_url = database_block.get("url") or os.environ.get("PROJET05_DATABASE_URL")
+    db_schema = database_block.get("schema")
+
     settings = Settings(
         random_state=int(payload.get("random_state", Settings.random_state)),
         path_sirh=_resolve_path(paths_block.get("sirh", Settings().path_sirh), base_dir=base_dir),
@@ -109,6 +115,7 @@ def load_settings(custom_path: str | os.PathLike[str] | None = None) -> Settings
         first_vars=_ensure_iterable(payload.get("first_vars"), field_name="first_vars"),
         subsample_frac=float(payload.get("subsample_frac", Settings.subsample_frac)),
         sql_file=_resolve_path(paths_block.get("sql_file", Settings().sql_file), base_dir=base_dir),
-        db_file=_resolve_path(paths_block.get("db_file", Settings().db_file), base_dir=base_dir),
+        db_url=db_url,
+        db_schema=db_schema,
     )
     return settings

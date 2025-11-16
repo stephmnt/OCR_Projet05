@@ -10,6 +10,7 @@ from loguru import logger
 from projet_05.settings import load_settings
 
 PIPELINE_STEPS = [
+    ("Initialisation base PostgreSQL", "scripts.init_db"),
     ("Préparation des données brutes", "projet_05.dataset"),
     ("Feature engineering", "projet_05.features"),
     ("Entraînement du modèle", "projet_05.modeling.train"),

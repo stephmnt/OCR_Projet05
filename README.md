@@ -76,6 +76,44 @@ python_version: 3.11
 - `scripts_projet04/brand` : charte graphique OpenClassrooms (classe `Theme`, palettes, YAML). Le module `projet_05/branding.py` en est la porte d'entrée et applique automatiquement le thème.
 - `scripts_projet04/manet_projet04/shap_generator.py` : fonctions `shap_global` / `shap_local` utilisées par `projet_05/modeling/train.py` pour reproduire les visualisations SHAP.
 
+## Base de données PostgreSQL
+
+Depuis la branche `postgresql`, toute la fusion des fichiers bruts repose sur une base PostgreSQL accessible via SQLAlchemy.
+
+1. Installez PostgreSQL (Homebrew, package officiel, etc.).
+2. Créez un rôle et la base attendue :
+
+> Exemple pour MacOS
+
+   ```bash
+   /opt/homebrew/opt/postgresql@17/bin/createuser -s postgres
+   /opt/homebrew/opt/postgresql@17/bin/psql -d postgres -c "ALTER USER postgres WITH PASSWORD 'postgres';"
+   /opt/homebrew/opt/postgresql@17/bin/createdb -O postgres projet05
+   ```
+
+   Adaptez les chemins/versions selon votre environnement.
+3. Renseignez la chaîne de connexion dans `projet_05/settings.yml` :
+
+   ```yaml
+   database:
+     url: postgresql+psycopg://user:password@host:5432/projet05
+     schema: public
+   ```
+
+   Il est également possible de définir `PROJET05_DATABASE_URL` dans l'environnement.
+
+4. Initialisez la base (création des tables + insertion des CSV d'exemple) avec :
+
+   ```bash
+   python -m scripts.init_db
+   ```
+
+5. Assurez-vous que l'utilisateur possède les droits `CREATE/DROP TABLE` dans le schéma ciblé : les tables `sirh`, `evaluation`, `sond` ainsi que `prediction_logs` seront créées ou recréées à chaque ré-exécution.
+
+6. Lancez ensuite `python -m projet_05.dataset` comme auparavant (ou `python main.py` pour exécuter toutes les étapes). La requête SQL utilisée est toujours exportée dans `reports/merge_sql.sql` pour audit.
+
+> Les interactions utilisateur/modèle (qu'elles proviennent du formulaire, du tableau ou d'un upload) sont automatiquement journalisées dans la table `prediction_logs`, ce qui permet de tracer les usages et de constituer un dataset réel pour le monitoring.
+
 --------
 
 Check out the configuration reference at https://huggingface.co/docs/hub/spaces-config-reference
@@ -105,7 +143,7 @@ Check out the configuration reference at https://huggingface.co/docs/hub/spaces-
 [![Issues][issues-shield]][issues-url]
 [![project_license][license-shield]][license-url]
 [![LinkedIn][linkedin-shield]][linkedin-url]
-![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/:user/:repo/:workflow)
+![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/stephmnt/OCR_Projet05/deploy.yml)
 
 <!-- PROJECT LOGO -->
 <br />
@@ -338,3 +376,8 @@ Project Link: [https://github.com/github_username/repo_name](https://github.com/
 [mkdocs-url]: https://stephmnt.github.io/OCR_Projet05/
 [NumPy]: https://img.shields.io/badge/NumPy-4DABCF?logo=numpy&logoColor=fff
 [![Pandas](https://img.shields.io/badge/Pandas-150458?logo=pandas&logoColor=fff)](#)
+
+![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/stephmnt/OCR_Projet05/deploy.yml)
+[![https://img.shields.io/badge/MkDocs-526CFE?logo=materialformkdocs&logoColor=fff]][[mkdocs-url](https://stephmnt.github.io/OCR_Projet05/)]
+![GitHub Release Date](https://img.shields.io/github/release-date/stephmnt/OCR_Projet05?display_date=published_at&style=flat-square)
+![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/stephmnt/OCR_Projet05/deploy.yml)

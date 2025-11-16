@@ -1,11 +1,13 @@
 from __future__ import annotations
 
-import sqlite3
 from pathlib import Path
 
 import numpy as np
 import pandas as pd
 from loguru import logger
+from sqlalchemy import create_engine, text
+from sqlalchemy.exc import OperationalError
+from sqlalchemy.engine import Engine
 import typer
 
 from projet_05.config import INTERIM_DATA_DIR
@@ -94,39 +96,58 @@ def _log_id_diagnostics(df: pd.DataFrame, *, name: str, col_id: str) -> None:
     )
 
 
+def _build_engine(settings: Settings) -> Engine:
+    if not settings.db_url:
+        raise RuntimeError(
+            "Aucune URL de base de données n'a été fournie. "
+            "Configurez `database.url` dans settings.yml ou l'environnement PROJET05_DATABASE_URL."
+        )
+    logger.info("Connexion à la base PostgreSQL {}", settings.db_url)
+    return create_engine(settings.db_url, future=True)
+
+
 def _persist_sql_trace(df_dict: dict[str, pd.DataFrame], settings: Settings) -> pd.DataFrame:
     """
-    Reproduire la fusion SQL décrite dans le notebook.
+    Reproduire la fusion SQL décrite dans le notebook en utilisant PostgreSQL.
 
-    Chaque DataFrame est stocké dans une base SQLite éphémère pour
-    conserver une traçabilité de la requête exécutée.
+    Chaque DataFrame est stocké dans des tables temporaires puis fusionné via SQL,
+    ce qui garantit une trace exacte de la requête exécutée.
     """
-    db_path = settings.db_file
     sql_path = settings.sql_file
-
-    db_path.parent.mkdir(parents=True, exist_ok=True)
     sql_path.parent.mkdir(parents=True, exist_ok=True)
 
-    if db_path.exists():
-        db_path.unlink()
-
+    schema = settings.db_schema
     query = f"""
     SELECT *
-    FROM sirh
-    INNER JOIN evaluation USING ({settings.col_id})
-    INNER JOIN sond USING ({settings.col_id});
+    FROM {"{}.".format(schema) if schema else ""}sirh
+    INNER JOIN {"{}.".format(schema) if schema else ""}evaluation USING ({settings.col_id})
+    INNER JOIN {"{}.".format(schema) if schema else ""}sond USING ({settings.col_id});
     """.strip()
-
-    with db_path.open("wb") as _:
-        pass  # just ensure the file exists for sqlite on some platforms
-
-    with sqlite3.connect(db_path) as conn:
-        for name, frame in df_dict.items():
-            frame.to_sql(name, conn, index=False, if_exists="replace")
-        merged = pd.read_sql_query(query, conn)
-
     sql_path.write_text(query, encoding="utf-8")
-    return merged
+
+    try:
+        engine = _build_engine(settings)
+        with engine.begin() as conn:
+            if schema:
+                conn.execute(text(f"CREATE SCHEMA IF NOT EXISTS {schema}"))
+            for table_name, frame in df_dict.items():
+                frame.to_sql(
+                    table_name,
+                    conn,
+                    schema=schema,
+                    index=False,
+                    if_exists="replace",
+                    method="multi",
+                )
+            merged = pd.read_sql_query(text(query), conn)
+        return merged
+    except OperationalError as exc:
+        logger.warning(
+            "Connexion PostgreSQL indisponible ({}). Fusion locale via pandas.",
+            getattr(exc, "orig", exc),
+        )
+        base = df_dict["sirh"].merge(df_dict["evaluation"], on=settings.col_id, how="inner")
+        return base.merge(df_dict["sond"], on=settings.col_id, how="inner")
 
 
 def build_dataset(settings: Settings) -> pd.DataFrame:

@@ -8,6 +8,8 @@ import gradio as gr
 import numpy as np
 import pandas as pd
 from loguru import logger
+from sqlalchemy import create_engine
+from sqlalchemy.engine import Engine
 
 from projet_05.branding import apply_brand_theme
 from projet_05.modeling.predict import load_metadata, load_pipeline, run_inference
@@ -190,6 +192,7 @@ try:
     SETTINGS = load_settings()
 except Exception:  # pragma: no cover - remains optional when config absent
     SETTINGS = None
+CACHED_ENGINE: Engine | None = None
 CATEGORICAL_NORMALIZERS: dict[str, dict[str, str]] = {
     "genre": {
         "f": "F",
@@ -309,6 +312,18 @@ def _ensure_settings():
             "Configuration introuvable. Placez `projet_05/settings.yml` dans le dépôt ou renseignez PROJET05_SETTINGS."
         )
     return SETTINGS
+
+
+def _get_db_engine(settings: Settings) -> Engine: # pyright: ignore[reportUndefinedVariable]
+    global CACHED_ENGINE
+    if CACHED_ENGINE is not None:
+        return CACHED_ENGINE
+    if not settings.db_url:
+        raise RuntimeError(
+            "Aucune URL de base de données n'a été fournie. Configurez `database.url` dans settings.yml."
+        )
+    CACHED_ENGINE = create_engine(settings.db_url, future=True)
+    return CACHED_ENGINE
 
 
 def _convert_input(payload: Any, headers: list[str]) -> pd.DataFrame:
@@ -481,6 +496,50 @@ def _merge_raw_sources(sirh_upload, evaluation_upload, sond_upload) -> pd.DataFr
     return merged
 
 
+def _log_predictions(source: str, raw_inputs: pd.DataFrame, scored: pd.DataFrame) -> None:
+    """Persist user interactions with the ML model into PostgreSQL."""
+
+    if SETTINGS is None or not SETTINGS.db_url:
+        return
+    settings = _ensure_settings()
+    try:
+        engine = _get_db_engine(settings)
+    except Exception as exc:  # pragma: no cover - logging best effort
+        logger.error("Connexion impossible pour logger les interactions: {}", exc)
+        return
+
+    payload = raw_inputs.reindex(scored.index).fillna(value=pd.NA)
+    col_id = settings.col_id
+    records = []
+    for idx, row in scored.iterrows():
+        original = payload.loc[idx].to_dict() if idx in payload.index else {} # type: ignore
+        records.append(
+            {
+                "id_employee": row.get(col_id),
+                "probability": float(row.get("proba_depart", 0.0)),
+                "decision": int(row.get("prediction", 0)),
+                "threshold": THRESHOLD,
+                "source": source,
+                "payload": json.dumps(original, ensure_ascii=False, default=str),
+            }
+        )
+
+    if not records:
+        return
+
+    try:
+        pd.DataFrame(records).to_sql(
+            "prediction_logs",
+            engine,
+            schema=settings.db_schema,
+            if_exists="append",
+            index=False,
+            method="multi",
+        )
+    except Exception as exc:  # pragma: no cover - logging best effort
+        logger.error("Impossible de journaliser les interactions: {}", exc)
+
+
 def _ensure_model():
     """Ensure that a pipeline has been loaded before inference."""
     if PIPELINE is None:
@@ -493,15 +552,18 @@ def score_table(table):
     """Score data entered via the interactive table."""
     _ensure_model()
     df = _convert_input(table, INPUT_FEATURES)
+    original = df.copy()
     df = _apply_derived_features(df)
     drop_cols = [TARGET_COLUMN] if TARGET_COLUMN else None
-    return run_inference(
+    scored = run_inference(
         df,
         PIPELINE,
         THRESHOLD,
         drop_columns=drop_cols,
         required_features=FEATURE_ORDER or None,
     )
+    _log_predictions("interactive_table", original, scored)
+    return scored
 
 
 def score_csv(upload):
@@ -511,15 +573,18 @@ def score_csv(upload):
     if upload is None:
         raise gr.Error("Veuillez déposer un fichier CSV.")
     df = pd.read_csv(upload.name)
+    original = df.copy()
     df = _apply_derived_features(df)
     drop_cols = [TARGET_COLUMN] if TARGET_COLUMN else None
-    return run_inference(
+    scored = run_inference(
         df,
         PIPELINE,
         THRESHOLD,
         drop_columns=drop_cols,
         required_features=FEATURE_ORDER or None,
     )
+    _log_predictions("csv_file", original, scored)
+    return scored
 
 
 def score_raw_files(sirh_upload, evaluation_upload, sond_upload):
@@ -527,15 +592,18 @@ def score_raw_files(sirh_upload, evaluation_upload, sond_upload):
 
     _ensure_model()
     merged = _merge_raw_sources(sirh_upload, evaluation_upload, sond_upload)
+    original = merged.copy()
     df = _apply_derived_features(merged)
     drop_cols = [TARGET_COLUMN] if TARGET_COLUMN else None
-    return run_inference(
+    scored = run_inference(
         df,
         PIPELINE,
         THRESHOLD,
         drop_columns=drop_cols,
         required_features=FEATURE_ORDER or None,
     )
+    _log_predictions("raw_files", original, scored)
+    return scored
 
 
 def predict_from_form(*values):
@@ -545,6 +613,7 @@ def predict_from_form(*values):
         raise gr.Error("Impossible de générer le formulaire sans configuration des features.")
     payload = {feature: value for feature, value in zip(INPUT_FEATURES, values)}
     df = pd.DataFrame([payload])
+    original = df.copy()
     df = _apply_derived_features(df)
     scored = run_inference(
         df,
@@ -552,6 +621,7 @@ def predict_from_form(*values):
         THRESHOLD,
         required_features=FEATURE_ORDER or None,
     )
+    _log_predictions("form", original, scored)
     row = scored.iloc[0]
     label = "Risque de départ" if int(row["prediction"]) == 1 else "Reste probable"
     return {
@@ -593,6 +663,21 @@ CATEGORICAL_FEATURES = categorical_from_schema
 
 with gr.Blocks(title="Prédicteur d'attrition") as demo:
     gr.Markdown("# OCR Projet 5 – Prédiction de départ employé")
+    gr.HTML(
+        """
+        <div style="display:flex; gap:0.5rem; flex-wrap:wrap;">
+            <a href="https://github.com/stephmnt/OCR_Projet05/releases" target="_blank" rel="noreferrer">
+                <img src="https://img.shields.io/github/v/release/stephmnt/OCR_Projet05" alt="GitHub Release" />
+            </a>
+            <a href="https://github.com/stephmnt/OCR_Projet05/actions/workflows/deploy.yml" target="_blank" rel="noreferrer">
+                <img src="https://img.shields.io/github/actions/workflow/status/stephmnt/OCR_Projet05/deploy.yml" alt="GitHub Actions Workflow Status" />
+            </a>
+            <a href="https://stephmnt.github.io/OCR_Projet05" target="_blank" rel="noreferrer">
+                <img src="https://img.shields.io/badge/MkDocs-526CFE?logo=materialformkdocs&logoColor=fff" alt="MkDocs" />
+            </a>
+        </div>
+        """
+    )
     gr.Markdown(
         "Le modèle fournit une probabilité de départ ainsi qu'une décision binaire."
     )

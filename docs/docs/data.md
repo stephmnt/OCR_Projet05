@@ -53,3 +53,19 @@ Les ratios et moyennes suivants sont ajoutés côté application ; inutile de 
 
 Un exemple complet de fichier à importer est disponible dans `data/sample_employees.csv`.  
 Il couvre les différents champs et peut servir de gabarit pour préparer vos propres jeux de données.
+
+## Schéma PostgreSQL
+
+La base PostgreSQL comprend quatre tables durables :
+
+| Table | Description | Colonnes principales |
+| --- | --- | --- |
+| `sirh` | Données RH structurées (profil, poste, revenu). | `id_employee` (PK), `age`, `genre`, `revenu_mensuel`, `statut_marital`, `departement`, `poste`, `nombre_experiences_precedentes`, `annees_dans_l_entreprise`, `annees_dans_le_poste_actuel`, etc. |
+| `evaluation` | Notes et informations d’évaluation annuelles. | `id_employee` (PK), `note_evaluation_actuelle`, `note_evaluation_precedente`, `niveau_hierarchique_poste`, `satisfaction_*`, `heure_supplementaires`, `augementation_salaire_precedente`. |
+| `sond` | Résultats du sondage employés + cible d’attrition. | `id_employee` (PK), `a_quitte_l_entreprise`, `nombre_participation_pee`, `nb_formations_suivies`, `distance_domicile_travail`, `niveau_education`, `domaine_etude`, `frequence_deplacement`, `annees_depuis_la_derniere_promotion`, etc. |
+| `prediction_logs` | Journalisation des interactions entre utilisateurs et modèle ML. | `log_id` (PK), `created_at`, `id_employee`, `source` (form/table/csv/raw), `probability`, `decision`, `threshold`, `payload` (JSON de l’entrée). |
+
+Les trois premières tables sont alimentées par le script `python -m scripts.init_db` à partir des CSV bruts (`paths.sirh`, `paths.evaluation`, `paths.sondage`).  
+`prediction_logs` est auto-alimentée par `app.py` lors de chaque prédiction, ce qui permet de tracer les usages et de recalibrer le modèle.
+
+> L’ensemble du pipeline (`dataset.py`, `app.py`, `scripts/init_db.py`) repose sur la même URL PostgreSQL (`database.url` dans `settings.yml`). Veillez à fournir un utilisateur disposant des droits `CREATE`, `INSERT` et `DROP` sur le schéma indiqué.
