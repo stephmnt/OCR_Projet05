@@ -43,7 +43,9 @@ format:
 ## Run tests
 .PHONY: test
 test:
-	python -m pytest tests
+	@mkdir -p logs/tests_logs
+	@timestamp=$$(date +%Y%m%d_%H%M%S); \
+	pytest | tee logs/tests_logs/$$timestamp.log
 
 
 ## Set up Python interpreter environment

@@ -19,4 +19,4 @@ nav:
   - Référence API:
       - main: main.md
       - app: app.md
-      - Greeter: greeter.md
+      - tests: tests.md

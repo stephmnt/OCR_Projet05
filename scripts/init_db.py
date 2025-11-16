@@ -119,7 +119,7 @@ def _load_frames(settings: Settings) -> dict[str, pd.DataFrame]:
 
 @app.command()
 def main(
-    settings_path: Path = typer.Option(
+    settings_path: Path | None = typer.Option(
         None,
         "--settings",
         "-s",

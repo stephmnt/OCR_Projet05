@@ -99,7 +99,8 @@ def load_settings(custom_path: str | os.PathLike[str] | None = None) -> Settings
     paths_block = payload.get("paths", {})
 
     database_block = payload.get("database", {})
-    db_url = database_block.get("url") or os.environ.get("PROJET05_DATABASE_URL")
+    env_db_url = os.environ.get("PROJET05_DATABASE_URL")
+    db_url = env_db_url or database_block.get("url")
     db_schema = database_block.get("schema")
 
     settings = Settings(

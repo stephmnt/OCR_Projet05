@@ -114,6 +114,28 @@ Depuis la branche `postgresql`, toute la fusion des fichiers bruts repose sur un
 
 > Les interactions utilisateur/modèle (qu'elles proviennent du formulaire, du tableau ou d'un upload) sont automatiquement journalisées dans la table `prediction_logs`, ce qui permet de tracer les usages et de constituer un dataset réel pour le monitoring.
 
+## Tests & couverture
+
+Une batterie de tests Pytest valident l’intégrité de la base PostgreSQL, la fusion des données et la journalisation des prédictions.
+
+1. Démarrez PostgreSQL (cf. section précédente) et créez un utilisateur ayant les droits `CREATE/DROP DATABASE`.
+2. Facultatif : définissez `PROJET05_TEST_DATABASE_URL` si vous souhaitez utiliser une URL différente de `postgresql+psycopg://postgres:postgres@localhost:5432/projet05_test`.
+3. Exécutez les tests et générez le rapport de couverture :
+
+   ```bash
+   pytest
+   ```
+
+   La configuration Pytest produit à la fois un rapport terminal (`--cov-report=term-missing`) et un fichier `coverage.xml` exploitable par vos outils CI/CD.
+   Les sorties complètes sont sauvegardées dans `logs/tests_logs/<timestamp>.log`.
+
+Les tests vérifient notamment :
+
+- la création des tables `sirh`, `evaluation`, `sond`, `prediction_logs` et la cohérence du nombre de lignes insérées ;
+- l’intégrité du DataFrame fusionné (typage, absence de valeurs nulles sur la clé primaire, cohérence de la cible) ;
+- la robustesse du script de log des prédictions (insertion d’entrées dans `prediction_logs` et nettoyage) ;
+- la génération des logs de pipeline, regroupés dans `logs/pipeline_logs/<timestamp>.log`.
+
 --------
 
 Check out the configuration reference at https://huggingface.co/docs/hub/spaces-config-reference

@@ -49,10 +49,11 @@ def run_step(label: str, module_path: str) -> None:
 
 def main() -> None:
     """Run all pipeline stages sequentially."""
-    log_dir = Path("logs")
-    log_dir.mkdir(parents=True, exist_ok=True)
+    log_root = Path("logs")
+    pipeline_log_dir = log_root / "pipeline_logs"
+    pipeline_log_dir.mkdir(parents=True, exist_ok=True)
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-    log_file = log_dir / f"{timestamp}.log"
+    log_file = pipeline_log_dir / f"{timestamp}.log"
 
     logger.add(log_file, level="INFO", enqueue=True)
     logger.info("Début d'exécution du pipeline (log: {})", log_file)
