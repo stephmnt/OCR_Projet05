@@ -22,7 +22,7 @@ Ce projet embarque désormais une démarche de tests structurée autour de **Pyt
 ## Exécution
 
 ```bash
-pytest
+make test
 ```
 
 Cette commande :

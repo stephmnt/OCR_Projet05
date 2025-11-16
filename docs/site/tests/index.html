@@ -8,7 +8,7 @@
         <meta name="author" content="Stéphane Manet">
         
         <link rel="shortcut icon" href="../img/favicon.ico">
-        <title>Guide de démarrage - Documentation du projet</title>
+        <title>tests - Documentation du projet</title>
         <link href="../css/bootstrap.min.css" rel="stylesheet">
         <link href="../css/fontawesome.min.css" rel="stylesheet">
         <link href="../css/brands.min.css" rel="stylesheet">
@@ -39,10 +39,10 @@
                                 <a href=".." class="nav-link">Accueil</a>
                             </li>
                             <li class="nav-item">
-                                <a href="./" class="nav-link active" aria-current="page">Guide de démarrage</a>
+                                <a href="../getting-started/" class="nav-link">Guide de démarrage</a>
                             </li>
                             <li class="nav-item dropdown">
-                                <a href="#" class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown"  aria-expanded="false">Référence API</a>
+                                <a href="#" class="nav-link dropdown-toggle active" aria-current="page" role="button" data-bs-toggle="dropdown"  aria-expanded="false">Référence API</a>
                                 <ul class="dropdown-menu">
                                     
 <li>
@@ -54,7 +54,7 @@
 </li>
                                     
 <li>
-    <a href="../tests/" class="dropdown-item">tests</a>
+    <a href="./" class="dropdown-item active" aria-current="page">tests</a>
 </li>
                                 </ul>
                             </li>
@@ -67,12 +67,12 @@
                             </a>
                         </li>
                             <li class="nav-item">
-                                <a rel="prev" href=".." class="nav-link">
+                                <a rel="prev" href="../app/" class="nav-link">
                                     <i class="fa fa-arrow-left"></i> Previous
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a rel="next" href="../main/" class="nav-link">
+                                <a rel="next" class="nav-link disabled">
                                     Next <i class="fa fa-arrow-right"></i>
                                 </a>
                             </li>
@@ -94,8 +94,24 @@
     <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
         <ul class="nav flex-column">
             
-            <li class="nav-item" data-bs-level="1"><a href="#getting-started" class="nav-link">Getting started</a>
+            <li class="nav-item" data-bs-level="1"><a href="#tests-et-couverture" class="nav-link">Tests et couverture</a>
               <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="2"><a href="#objectifs" class="nav-link">Objectifs</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#organisation" class="nav-link">Organisation</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#execution" class="nav-link">Exécution</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#pourquoi-cette-approche" class="nav-link">Pourquoi cette approche ?</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
               </ul>
             </li>
         </ul>
@@ -103,10 +119,42 @@
 </div></div>
                     <div class="col-md-9" role="main">
 
-<h1 id="getting-started">Getting started</h1>
-<p>This is where you describe how to get set up on a clean install, including the
-commands necessary to get the raw data (using the <code>sync_data_from_s3</code> command,
-for example), and then how to make the cleaned, final data sets.</p></div>
+<h1 id="tests-et-couverture">Tests et couverture</h1>
+<p>Ce projet embarque désormais une démarche de tests structurée autour de <strong>Pytest</strong> et de <strong>pytest-cov</strong> afin de valider l’intégrité du pipeline, en particulier la partie base de données PostgreSQL.</p>
+<h2 id="objectifs">Objectifs</h2>
+<ul>
+<li>Garantir que la fusion et les manipulations SQL respectent la structure attendue (tables, colonnes, volumes).</li>
+<li>Vérifier que les transformations amont (<code>dataset.py</code>) et la journalisation des prédictions (<code>app.py</code>) restent robustes face aux évolutions.</li>
+<li>Offrir un rapport de couverture exploitable (terminal + <code>coverage.xml</code>) pour le suivi de la qualité.</li>
+</ul>
+<h2 id="organisation">Organisation</h2>
+<ul>
+<li><strong>Dépendances</strong> : <code>pyproject.toml</code> inclut <code>pytest</code>, <code>pytest-cov</code> et la configuration des options (<code>--cov</code>, <code>--cov-report</code>).</li>
+<li><strong>Dossier <code>tests/</code></strong> :</li>
+<li><code>tests/conftest.py</code> : prépare une base PostgreSQL dédiée aux tests (<code>projet05_test</code>) en créant/ supprimant dynamiquement la base, en lançant <code>scripts.init_db</code>, puis en nettoyant les connexions via <code>pg_terminate_backend</code>.</li>
+<li><code>tests/test_database.py</code> :<ul>
+<li>vérifie la présence des tables (<code>sirh</code>, <code>evaluation</code>, <code>sond</code>, <code>prediction_logs</code>) et leur volumétrie par rapport aux CSV bruts ;</li>
+<li>s’assure que la fusion <code>build_dataset</code> préserve typage, clé primaire et valeurs de la cible ;</li>
+<li>teste <code>_log_predictions</code> pour confirmer que chaque interaction utilisateur est bien enregistrée.</li>
+</ul>
+</li>
+<li><code>tests/test_data.py</code> : couvre les utilitaires de nettoyage (<code>clean_text_values</code>) et d’harmonisation des identifiants (<code>_harmonize_id_column</code>).</li>
+</ul>
+<h2 id="execution">Exécution</h2>
+<pre><code class="language-bash">pytest
+</code></pre>
+<p>Cette commande :
+1. Démarre la base de test, initialise les tables avec les CSV (<code>scripts.init_db</code>).
+2. Exécute l’ensemble des tests.
+3. Génère les rapports de couverture (<code>term-missing</code> et <code>coverage.xml</code>).
+4. Sauvegarde la sortie complète de Pytest dans <code>logs/tests_logs/&lt;timestamp&gt;.log</code> (créé automatiquement via <code>make test</code>).</p>
+<p>Le rôle <code>postgres</code>/base <code>projet05_test</code> sont créés à la volée. Les tests nécessitent un serveur PostgreSQL local accessible via <code>postgresql+psycopg://postgres:postgres@localhost:5432</code>. Vous pouvez ajuster l’URL via <code>PROJET05_TEST_DATABASE_URL</code>.</p>
+<h2 id="pourquoi-cette-approche">Pourquoi cette approche ?</h2>
+<ul>
+<li><strong>Reproductibilité</strong> : chaque test s’appuie sur des données d’exemple réalistes sans impacter l’environnement de prod.</li>
+<li><strong>Robustesse</strong> : failover pandas dans <code>dataset.py</code> est testé implicitement, et la journalisation garantit la traçabilité des interactions.</li>
+<li><strong>Transparence</strong> : la couverture met immédiatement en évidence les modules non testés (ex. <code>features.py</code>, <code>train.py</code>) pour prioriser les efforts, et les journaux sont regroupés sous <code>logs/tests_logs/</code>.</li>
+</ul></div>
             </div>
         </div>
 

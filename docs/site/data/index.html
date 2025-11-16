@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <meta name="author" content="Stéphane Manet">
+        
+        <link rel="shortcut icon" href="../img/favicon.ico">
+        <title>Données attendues - Documentation du projet</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/fontawesome.min.css" rel="stylesheet">
+        <link href="../css/brands.min.css" rel="stylesheet">
+        <link href="../css/solid.min.css" rel="stylesheet">
+        <link href="../css/v4-font-face.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link id="hljs-light" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" >
+        <link id="hljs-dark" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css" disabled>
+        <link href="../assets/_mkdocstrings.css" rel="stylesheet">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="..">Documentation du projet</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="nav-item">
+                                <a href=".." class="nav-link">Accueil</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../getting-started/" class="nav-link">Guide de démarrage</a>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown"  aria-expanded="false">Référence API</a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../main/" class="dropdown-item">main</a>
+</li>
+                                    
+<li>
+    <a href="../app/" class="dropdown-item">app</a>
+</li>
+                                    
+<li>
+    <a href="../tests/" class="dropdown-item">tests</a>
+</li>
+                                </ul>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ms-md-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-bs-toggle="collapse" data-bs-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-bs-level="1"><a href="#donnees-attendues" class="nav-link">Données attendues</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="2"><a href="#champs-numeriques" class="nav-link">Champs numériques</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#champs-categoriels-listes-deroulantes" class="nav-link">Champs catégoriels (listes déroulantes)</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#colonnes-calculees-automatiquement" class="nav-link">Colonnes calculées automatiquement</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#schema-postgresql" class="nav-link">Schéma PostgreSQL</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="donnees-attendues">Données attendues</h1>
+<p>L’interface Gradio expose trois modes d’entrée (formulaire, tableau interactif, import CSV).<br />
+Dans tous les cas, il faut fournir les colonnes « brutes » ci-dessous ; l’application se charge ensuite de recalculer toutes les features dérivées (ratios, moyennes de satisfaction, etc.).</p>
+<h2 id="champs-numeriques">Champs numériques</h2>
+<table>
+<thead>
+<tr>
+<th>Colonne</th>
+<th>Description</th>
+<th>Format attendu</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>age</code></td>
+<td>Âge de l’employé</td>
+<td>Entier ou décimal en années</td>
+</tr>
+<tr>
+<td><code>revenu_mensuel</code></td>
+<td>Salaire mensuel brut</td>
+<td>Numérique, en euros</td>
+</tr>
+<tr>
+<td><code>annees_dans_l_entreprise</code></td>
+<td>Ancienneté totale</td>
+<td>Nombre d’années (ex : 4.5)</td>
+</tr>
+<tr>
+<td><code>annees_dans_le_poste_actuel</code></td>
+<td>Ancienneté sur le poste actuel</td>
+<td>Nombre d’années</td>
+</tr>
+<tr>
+<td><code>annees_depuis_la_derniere_promotion</code></td>
+<td>Temps depuis la dernière promotion</td>
+<td>Nombre d’années</td>
+</tr>
+<tr>
+<td><code>distance_domicile_travail</code></td>
+<td>Distance domicile ↔ travail</td>
+<td>Kilomètres</td>
+</tr>
+<tr>
+<td><code>nombre_participation_pee</code></td>
+<td>Participations au PEE</td>
+<td>Entier</td>
+</tr>
+<tr>
+<td><code>nombre_experiences_precedentes</code></td>
+<td>Nombre d’expériences professionnelles antérieures</td>
+<td>Entier</td>
+</tr>
+<tr>
+<td><code>note_evaluation_actuelle</code></td>
+<td>Dernière note d’évaluation</td>
+<td>Score de 1 à 5</td>
+</tr>
+<tr>
+<td><code>note_evaluation_precedente</code></td>
+<td>Note d’évaluation précédente</td>
+<td>Score de 1 à 5</td>
+</tr>
+<tr>
+<td><code>annee_experience_totale</code></td>
+<td>Expérience cumulée</td>
+<td>Nombre d’années</td>
+</tr>
+<tr>
+<td><code>nb_formations_suivies</code></td>
+<td>Formations suivies</td>
+<td>Entier</td>
+</tr>
+<tr>
+<td><code>nombre_employee_sous_responsabilite</code></td>
+<td>Nombre de collaborateurs supervisés</td>
+<td>Entier</td>
+</tr>
+<tr>
+<td><code>augementation_salaire_precedente</code></td>
+<td>Dernière augmentation, exprimée en %</td>
+<td>Valeur décimale ou pourcentage (ex : <code>5%</code>)</td>
+</tr>
+<tr>
+<td><code>satisfaction_employee_environnement</code></td>
+<td>Satisfaction vis-à-vis de l’environnement</td>
+<td>Score de 1 (faible) à 5 (forte)</td>
+</tr>
+<tr>
+<td><code>satisfaction_employee_nature_travail</code></td>
+<td>Satisfaction vis-à-vis des missions</td>
+<td>Score de 1 à 5</td>
+</tr>
+<tr>
+<td><code>satisfaction_employee_equipe</code></td>
+<td>Satisfaction vis-à-vis de l’équipe</td>
+<td>Score de 1 à 5</td>
+</tr>
+<tr>
+<td><code>satisfaction_employee_equilibre_pro_perso</code></td>
+<td>Satisfaction équilibre pro/perso</td>
+<td>Score de 1 à 5</td>
+</tr>
+</tbody>
+</table>
+<h2 id="champs-categoriels-listes-deroulantes">Champs catégoriels (listes déroulantes)</h2>
+<table>
+<thead>
+<tr>
+<th>Colonne</th>
+<th>Valeurs proposées dans l’UI</th>
+<th>Valeurs utilisées pour l’inférence</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>genre</code></td>
+<td><code>Femme</code>, <code>Homme</code></td>
+<td>Converties vers <code>F</code> / <code>M</code></td>
+</tr>
+<tr>
+<td><code>frequence_deplacement</code></td>
+<td><code>Aucun</code>, <code>Occasionnel</code>, <code>Frequent</code></td>
+<td>Valeurs identiques</td>
+</tr>
+<tr>
+<td><code>statut_marital</code></td>
+<td><code>Célibataire</code>, <code>Marié(e)</code>, <code>Divorcé(e)</code></td>
+<td>Valeurs identiques</td>
+</tr>
+<tr>
+<td><code>departement</code></td>
+<td><code>Commercial</code>, <code>Consulting</code>, <code>Ressources Humaines</code></td>
+<td>Valeurs identiques</td>
+</tr>
+<tr>
+<td><code>poste</code></td>
+<td><code>Cadre Commercial</code>, <code>Assistant de Direction</code>, <code>Consultant</code>, <code>Tech Lead</code>, <code>Manager</code>, <code>Senior Manager</code>, <code>Représentant Commercial</code>, <code>Directeur Technique</code>, <code>Ressources Humaines</code></td>
+<td>Valeurs identiques</td>
+</tr>
+<tr>
+<td><code>niveau_hierarchique_poste</code></td>
+<td>Saisie libre (ex : <code>Junior</code>, <code>Senior</code>, <code>Direction</code>)</td>
+<td>Texte libre</td>
+</tr>
+<tr>
+<td><code>niveau_education</code></td>
+<td>Saisie libre (ex : <code>Licence</code>, <code>Master</code>, <code>Doctorat</code>)</td>
+<td>Texte libre</td>
+</tr>
+<tr>
+<td><code>domaine_etude</code></td>
+<td><code>Entrepreunariat</code>, <code>Infra &amp; Cloud</code>, <code>Marketing</code>, <code>Ressources Humaines</code>, <code>Transformation Digitale</code></td>
+<td>Valeurs identiques</td>
+</tr>
+<tr>
+<td><code>heure_supplementaires</code></td>
+<td><code>Oui</code>, <code>Non</code></td>
+<td>Valeurs identiques</td>
+</tr>
+</tbody>
+</table>
+<h2 id="colonnes-calculees-automatiquement">Colonnes calculées automatiquement</h2>
+<p>Les ratios et moyennes suivants sont ajoutés côté application ; inutile de les fournir dans vos fichiers :</p>
+<ul>
+<li><code>augmentation_par_revenu</code></li>
+<li><code>annee_sur_poste_par_experience</code></li>
+<li><code>nb_formation_par_experience</code></li>
+<li><code>score_moyen_satisfaction</code></li>
+<li><code>dern_promo_par_experience</code></li>
+<li><code>evolution_note</code></li>
+</ul>
+<p>Un exemple complet de fichier à importer est disponible dans <code>data/sample_employees.csv</code>.<br />
+Il couvre les différents champs et peut servir de gabarit pour préparer vos propres jeux de données.</p>
+<h2 id="schema-postgresql">Schéma PostgreSQL</h2>
+<p>La base PostgreSQL comprend quatre tables durables :</p>
+<table>
+<thead>
+<tr>
+<th>Table</th>
+<th>Description</th>
+<th>Colonnes principales</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>sirh</code></td>
+<td>Données RH structurées (profil, poste, revenu).</td>
+<td><code>id_employee</code> (PK), <code>age</code>, <code>genre</code>, <code>revenu_mensuel</code>, <code>statut_marital</code>, <code>departement</code>, <code>poste</code>, <code>nombre_experiences_precedentes</code>, <code>annees_dans_l_entreprise</code>, <code>annees_dans_le_poste_actuel</code>, etc.</td>
+</tr>
+<tr>
+<td><code>evaluation</code></td>
+<td>Notes et informations d’évaluation annuelles.</td>
+<td><code>id_employee</code> (PK), <code>note_evaluation_actuelle</code>, <code>note_evaluation_precedente</code>, <code>niveau_hierarchique_poste</code>, <code>satisfaction_*</code>, <code>heure_supplementaires</code>, <code>augementation_salaire_precedente</code>.</td>
+</tr>
+<tr>
+<td><code>sond</code></td>
+<td>Résultats du sondage employés + cible d’attrition.</td>
+<td><code>id_employee</code> (PK), <code>a_quitte_l_entreprise</code>, <code>nombre_participation_pee</code>, <code>nb_formations_suivies</code>, <code>distance_domicile_travail</code>, <code>niveau_education</code>, <code>domaine_etude</code>, <code>frequence_deplacement</code>, <code>annees_depuis_la_derniere_promotion</code>, etc.</td>
+</tr>
+<tr>
+<td><code>prediction_logs</code></td>
+<td>Journalisation des interactions entre utilisateurs et modèle ML.</td>
+<td><code>log_id</code> (PK), <code>created_at</code>, <code>id_employee</code>, <code>source</code> (form/table/csv/raw), <code>probability</code>, <code>decision</code>, <code>threshold</code>, <code>payload</code> (JSON de l’entrée).</td>
+</tr>
+</tbody>
+</table>
+<p>Les trois premières tables sont alimentées par le script <code>python -m scripts.init_db</code> à partir des CSV bruts (<code>paths.sirh</code>, <code>paths.evaluation</code>, <code>paths.sondage</code>).<br />
+<code>prediction_logs</code> est auto-alimentée par <code>app.py</code> lors de chaque prédiction, ce qui permet de tracer les usages et de recalibrer le modèle.</p>
+<blockquote>
+<p>L’ensemble du pipeline (<code>dataset.py</code>, <code>app.py</code>, <code>scripts/init_db.py</code>) repose sur la même URL PostgreSQL (<code>database.url</code> dans <code>settings.yml</code>). Veillez à fournir un utilisateur disposant des droits <code>CREATE</code>, <code>INSERT</code> et <code>DROP</code> sur le schéma indiqué.</p>
+</blockquote></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script src="../js/bootstrap.bundle.min.js"></script>
+        <script>
+            var base_url = "..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../js/base.js"></script>
+        <script src="../search/main.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>
