@@ -5,6 +5,7 @@ theme:
 
 plugins:
   - search
+  - mermaid2
   - mkdocstrings:
       handlers:
         python:
@@ -16,6 +17,8 @@ plugins:
 nav:
   - Accueil: index.md
   - Guide de démarrage: getting-started.md
+  - Choix techniques: choix-techniques.md
+  - Données : data.md
   - Référence API:
       - main: main.md
       - app: app.md

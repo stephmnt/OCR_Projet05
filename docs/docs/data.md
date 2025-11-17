@@ -1,6 +1,6 @@
 # Données attendues
 
-L’interface Gradio expose trois modes d’entrée (formulaire, tableau interactif, import CSV).  
+L’interface Gradio expose trois modes d’entrée (Formulaire unitaire, Fichier CSV fusionné, fichiers non-mergés).  
 Dans tous les cas, il faut fournir les colonnes « brutes » ci-dessous ; l’application se charge ensuite de recalculer toutes les features dérivées (ratios, moyennes de satisfaction, etc.).
 
 ## Champs numériques
@@ -61,11 +61,59 @@ La base PostgreSQL comprend quatre tables durables :
 | Table | Description | Colonnes principales |
 | --- | --- | --- |
 | `sirh` | Données RH structurées (profil, poste, revenu). | `id_employee` (PK), `age`, `genre`, `revenu_mensuel`, `statut_marital`, `departement`, `poste`, `nombre_experiences_precedentes`, `annees_dans_l_entreprise`, `annees_dans_le_poste_actuel`, etc. |
-| `evaluation` | Notes et informations d’évaluation annuelles. | `id_employee` (PK), `note_evaluation_actuelle`, `note_evaluation_precedente`, `niveau_hierarchique_poste`, `satisfaction_*`, `heure_supplementaires`, `augementation_salaire_precedente`. |
-| `sond` | Résultats du sondage employés + cible d’attrition. | `id_employee` (PK), `a_quitte_l_entreprise`, `nombre_participation_pee`, `nb_formations_suivies`, `distance_domicile_travail`, `niveau_education`, `domaine_etude`, `frequence_deplacement`, `annees_depuis_la_derniere_promotion`, etc. |
+| `evaluation` | Notes et informations d’évaluation annuelles. | `eval_number` (PK), `note_evaluation_actuelle`, `note_evaluation_precedente`, `niveau_hierarchique_poste`, `satisfaction_*`, `heure_supplementaires`, `augementation_salaire_precedente`. |
+| `sond` | Résultats du sondage employés + cible d’attrition. | `code_sondage` (PK), `a_quitte_l_entreprise`, `nombre_participation_pee`, `nb_formations_suivies`, `distance_domicile_travail`, `niveau_education`, `domaine_etude`, `frequence_deplacement`, `annees_depuis_la_derniere_promotion`, etc. |
 | `prediction_logs` | Journalisation des interactions entre utilisateurs et modèle ML. | `log_id` (PK), `created_at`, `id_employee`, `source` (form/table/csv/raw), `probability`, `decision`, `threshold`, `payload` (JSON de l’entrée). |
 
 Les trois premières tables sont alimentées par le script `python -m scripts.init_db` à partir des CSV bruts (`paths.sirh`, `paths.evaluation`, `paths.sondage`).  
 `prediction_logs` est auto-alimentée par `app.py` lors de chaque prédiction, ce qui permet de tracer les usages et de recalibrer le modèle.
+
+```mermaid
+erDiagram
+    sirh ||--|| evaluation : "id_employee"
+    sirh ||--|| sond : "code_sondage"
+    sirh ||--o{ prediction_logs : "eval_number"
+
+    sirh {
+        Int id_employee PK
+        Float age
+        Float revenu_mensuel
+        String departement
+        String poste
+        Float annees_dans_l_entreprise
+        Float annees_dans_le_poste_actuel
+    }
+
+    evaluation {
+        Int id_employee PK
+        Float note_evaluation_actuelle
+        Float note_evaluation_precedente
+        Float niveau_hierarchique_poste
+        Float satisfaction_employee_environnement
+        String heure_supplementaires
+        String augementation_salaire_precedente
+    }
+
+    sond {
+        Int id_employee PK
+        String a_quitte_l_entreprise
+        Float nombre_participation_pee
+        Float nb_formations_suivies
+        Float distance_domicile_travail
+        Float niveau_education
+        String domaine_etude
+        Float annees_depuis_la_derniere_promotion
+    }
+
+    prediction_logs {
+        Int log_id PK
+        DateTime created_at
+        Int id_employee
+        String source
+        Float probability
+        Int decision
+        Float threshold
+    }
+```
 
 > L’ensemble du pipeline (`dataset.py`, `app.py`, `scripts/init_db.py`) repose sur la même URL PostgreSQL (`database.url` dans `settings.yml`). Veillez à fournir un utilisateur disposant des droits `CREATE`, `INSERT` et `DROP` sur le schéma indiqué.

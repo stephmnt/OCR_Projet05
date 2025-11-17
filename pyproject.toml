@@ -4,7 +4,7 @@ build-backend = "flit_core.buildapi"
 
 [project]
 name = "projet_05"
-version = "0.0.1"
+version = "1.1.1"
 description = "D\u00e9ployez un mod\u00e8le de Machine Learning"
 authors = [
   { name = "St\u00e9phane Manet" },

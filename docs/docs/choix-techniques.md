@@ -49,14 +49,14 @@ Ce document résume les décisions structurantes du projet. Il complète les sec
 
 - **Organisation des branches** :
   - `main` : branche stable, protégée par les workflows `deploy.yml` et `static.yml`.
-  - `feature/*` : branches métier/histoires utilisateurs (ex. `feature/api-security`, `feature/data-quality`) créées depuis `main` pour isoler chaque lot.
-  - `fix/*` : correctifs ponctuels ou hotfix avant release (ex. `fix/logging-timezone`).
+  - Trois branches fonctionnelles ont été créées au fil de la mission, chacune dédiée à une étape majeure (`tests`, `postgresql`, `doc`). Chacune a été mergée dans `main` une fois la fonctionnalité validée.
+  - Des branches ponctuelles `feature/*` ou `fix/*` peuvent encore être ouvertes pour de futures évolutions (ex. `feature/api-security`, `fix/logging-timezone`).
 - **Conventions de nommage** :
   - Préfixes explicites (`feature/`, `fix/`, `docs/`) suivis d’un identifiant court décrivant l’objet du travail.
   - Messages de commit au format `type(scope): résumé` (ex. `feat(app): log prediction payload`), facilitant la lecture du `git log --oneline`.
 - **Releases & tags** :
-  - Chaque jalon soutenable est tagué `vX.Y.Z` (dernière release `v1.1.1`, voir badges GitHub dans `README.md:16-20`).
-  - Les releases GitHub regroupent les artefacts (modèle, documentation) et déclenchent le déploiement automatique vers Hugging Face. Elles servent de points de restauration en cas de régression.
+  - Chaque jalon correspond à une présentation (mentorat OpenClassrooms) ou à la soutenance finale. La release actuelle (`v1.1.1`) marque la présentation intermédiaire ; la prochaine accompagnera la soutenance.
+  - Les tags `vX.Y.Z` suivent les fonctionnalités livrées (intégration PostgreSQL, campagne de tests, documentation). Chaque release génère les artefacts (modèle, doc) et déclenche le déploiement HF, ce qui facilite le retour arrière en cas de regression.
 
 ## Synthèse
 

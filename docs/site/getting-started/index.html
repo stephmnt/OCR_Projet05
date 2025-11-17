@@ -1,187 +1,395 @@
 <!DOCTYPE html>
-<html lang="en" data-bs-theme="light">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        
-        <meta name="author" content="Stéphane Manet">
-        
-        <link rel="shortcut icon" href="../img/favicon.ico">
-        <title>Guide de démarrage - Documentation du projet</title>
-        <link href="../css/bootstrap.min.css" rel="stylesheet">
-        <link href="../css/fontawesome.min.css" rel="stylesheet">
-        <link href="../css/brands.min.css" rel="stylesheet">
-        <link href="../css/solid.min.css" rel="stylesheet">
-        <link href="../css/v4-font-face.min.css" rel="stylesheet">
-        <link href="../css/base.css" rel="stylesheet">
-        <link id="hljs-light" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" >
-        <link id="hljs-dark" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css" disabled>
-        <link href="../assets/_mkdocstrings.css" rel="stylesheet">
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
-        <script>hljs.highlightAll();</script> 
-    </head>
 
-    <body>
-        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
-            <div class="container">
-                <a class="navbar-brand" href="..">Documentation du projet</a>
-                <!-- Expander button -->
-                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-
-                <!-- Expanded navigation -->
-                <div id="navbar-collapse" class="navbar-collapse collapse">
-                        <!-- Main navigation -->
-                        <ul class="nav navbar-nav">
-                            <li class="nav-item">
-                                <a href=".." class="nav-link">Accueil</a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="./" class="nav-link active" aria-current="page">Guide de démarrage</a>
-                            </li>
-                            <li class="nav-item dropdown">
-                                <a href="#" class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown"  aria-expanded="false">Référence API</a>
-                                <ul class="dropdown-menu">
-                                    
-<li>
-    <a href="../main/" class="dropdown-item">main</a>
+<html data-bs-theme="light" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="Stéphane Manet" name="author"/>
+<link href="../img/favicon.ico" rel="shortcut icon"/>
+<title>Guide de démarrage - Documentation du projet</title>
+<link href="../css/bootstrap.min.css" rel="stylesheet"/>
+<link href="../css/fontawesome.min.css" rel="stylesheet"/>
+<link href="../css/brands.min.css" rel="stylesheet"/>
+<link href="../css/solid.min.css" rel="stylesheet"/>
+<link href="../css/v4-font-face.min.css" rel="stylesheet"/>
+<link href="../css/base.css" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" id="hljs-light" rel="stylesheet"/>
+<link disabled="" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css" id="hljs-dark" rel="stylesheet"/>
+<link href="../assets/_mkdocstrings.css" rel="stylesheet"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+</head>
+<body>
+<div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+<div class="container">
+<a class="navbar-brand" href="..">Documentation du projet</a>
+<!-- Expander button -->
+<button aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler" data-bs-target="#navbar-collapse" data-bs-toggle="collapse" type="button">
+<span class="navbar-toggler-icon"></span>
+</button>
+<!-- Expanded navigation -->
+<div class="navbar-collapse collapse" id="navbar-collapse">
+<!-- Main navigation -->
+<ul class="nav navbar-nav">
+<li class="nav-item">
+<a class="nav-link" href="..">Accueil</a>
 </li>
-                                    
-<li>
-    <a href="../app/" class="dropdown-item">app</a>
+<li class="nav-item">
+<a aria-current="page" class="nav-link active" href="./">Guide de démarrage</a>
 </li>
-                                    
-<li>
-    <a href="../tests/" class="dropdown-item">tests</a>
+<li class="nav-item">
+<a class="nav-link" href="../choix-techniques/">Choix techniques</a>
 </li>
-                                </ul>
-                            </li>
-                        </ul>
-
-                    <ul class="nav navbar-nav ms-md-auto">
-                        <li class="nav-item">
-                            <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#mkdocs_search_modal">
-                                <i class="fa fa-search"></i> Search
+<li class="nav-item">
+<a class="nav-link" href="../data/">Données</a>
+</li>
+<li class="nav-item dropdown">
+<a aria-expanded="false" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button">Référence API</a>
+<ul class="dropdown-menu">
+<li>
+<a class="dropdown-item" href="../main/">main</a>
+</li>
+<li>
+<a class="dropdown-item" href="../app/">app</a>
+</li>
+<li>
+<a class="dropdown-item" href="../tests/">tests</a>
+</li>
+</ul>
+</li>
+</ul>
+<ul class="nav navbar-nav ms-md-auto">
+<li class="nav-item">
+<a class="nav-link" data-bs-target="#mkdocs_search_modal" data-bs-toggle="modal" href="#">
+<i class="fa fa-search"></i> Search
                             </a>
-                        </li>
-                            <li class="nav-item">
-                                <a rel="prev" href=".." class="nav-link">
-                                    <i class="fa fa-arrow-left"></i> Previous
+</li>
+<li class="nav-item">
+<a class="nav-link" href=".." rel="prev">
+<i class="fa fa-arrow-left"></i> Previous
                                 </a>
-                            </li>
-                            <li class="nav-item">
-                                <a rel="next" href="../main/" class="nav-link">
+</li>
+<li class="nav-item">
+<a class="nav-link" href="../choix-techniques/" rel="next">
                                     Next <i class="fa fa-arrow-right"></i>
-                                </a>
-                            </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-
-        <div class="container">
-            <div class="row">
-                    <div class="col-md-3"><div class="navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
-    <div class="navbar-header">
-        <button type="button" class="navbar-toggler collapsed" data-bs-toggle="collapse" data-bs-target="#toc-collapse" title="Table of Contents">
-            <span class="fa fa-angle-down"></span>
-        </button>
-    </div>
-
-    
-    <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
-        <ul class="nav flex-column">
-            
-            <li class="nav-item" data-bs-level="1"><a href="#getting-started" class="nav-link">Getting started</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-        </ul>
-    </div>
+</a>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="container">
+<div class="row">
+<div class="col-md-3"><div class="navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+<div class="navbar-header">
+<button class="navbar-toggler collapsed" data-bs-target="#toc-collapse" data-bs-toggle="collapse" title="Table of Contents" type="button">
+<span class="fa fa-angle-down"></span>
+</button>
+</div>
+<div class="navbar-collapse collapse card bg-body-tertiary" id="toc-collapse">
+<ul class="nav flex-column">
+<li class="nav-item" data-bs-level="1"><a class="nav-link" href="#guide-de-demarrage-rapide">Guide de démarrage rapide</a>
+<ul class="nav flex-column">
+<li class="nav-item" data-bs-level="2"><a class="nav-link" href="#1-prerequis">1. Prérequis</a>
+<ul class="nav flex-column">
+</ul>
+</li>
+<li class="nav-item" data-bs-level="2"><a class="nav-link" href="#2-recuperer-le-depot">2. Récupérer le dépôt</a>
+<ul class="nav flex-column">
+</ul>
+</li>
+<li class="nav-item" data-bs-level="2"><a class="nav-link" href="#3-preparer-lenvironnement-python">3. Préparer l’environnement Python</a>
+<ul class="nav flex-column">
+</ul>
+</li>
+<li class="nav-item" data-bs-level="2"><a class="nav-link" href="#4-configuration-du-projet">4. Configuration du projet</a>
+<ul class="nav flex-column">
+</ul>
+</li>
+<li class="nav-item" data-bs-level="2"><a class="nav-link" href="#5-initialiser-postgresql">5. Initialiser PostgreSQL</a>
+<ul class="nav flex-column">
+</ul>
+</li>
+<li class="nav-item" data-bs-level="2"><a class="nav-link" href="#6-pipeline-data-entrainement">6. Pipeline data &amp; entraînement</a>
+<ul class="nav flex-column">
+</ul>
+</li>
+<li class="nav-item" data-bs-level="2"><a class="nav-link" href="#7-lancer-lapplication-gradio">7. Lancer l’application Gradio</a>
+<ul class="nav flex-column">
+</ul>
+</li>
+<li class="nav-item" data-bs-level="2"><a class="nav-link" href="#8-tests-et-qualite">8. Tests et qualité</a>
+<ul class="nav flex-column">
+</ul>
+</li>
+<li class="nav-item" data-bs-level="2"><a class="nav-link" href="#9-documentation-mkdocs">9. Documentation MkDocs</a>
+<ul class="nav flex-column">
+</ul>
+</li>
+<li class="nav-item" data-bs-level="2"><a class="nav-link" href="#10-cicd-deploiement-hugging-face">10. CI/CD &amp; déploiement Hugging Face</a>
+<ul class="nav flex-column">
+</ul>
+</li>
+<li class="nav-item" data-bs-level="2"><a class="nav-link" href="#11-depannage-rapide">11. Dépannage rapide</a>
+<ul class="nav flex-column">
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
 </div></div>
-                    <div class="col-md-9" role="main">
-
-<h1 id="getting-started">Getting started</h1>
-<p>This is where you describe how to get set up on a clean install, including the
-commands necessary to get the raw data (using the <code>sync_data_from_s3</code> command,
-for example), and then how to make the cleaned, final data sets.</p></div>
-            </div>
-        </div>
-
-        <footer class="col-md-12">
-            <hr>
-            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
-        </footer>
-        <script src="../js/bootstrap.bundle.min.js"></script>
-        <script>
+<div class="col-md-9" role="main">
+<h1 id="guide-de-demarrage-rapide">Guide de démarrage rapide</h1>
+<p>Ce document détaille toutes les étapes pour exécuter le projet OCR_Projet05 (préparation des données, entraînement, application Gradio et CI/CD). Les instructions sont valables sur macOS, Linux et Windows (PowerShell ou WSL).</p>
+<h2 id="1-prerequis">1. Prérequis</h2>
+<table>
+<thead>
+<tr>
+<th>Outil</th>
+<th>Version recommandée</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Python</td>
+<td>3.11</td>
+<td>Utilise <code>pyenv</code>, <code>conda</code> ou l’installateur officiel.</td>
+</tr>
+<tr>
+<td>PostgreSQL</td>
+<td>≥ 14 (tests) / 17 (prod locale)</td>
+<td>Le rôle <code>postgres/postgres</code> doit disposer des droits <code>CREATE DATABASE</code>.</td>
+</tr>
+<tr>
+<td>Git</td>
+<td>≥ 2.30</td>
+<td>Pour cloner le dépôt et pousser vers GitHub/Hugging Face.</td>
+</tr>
+<tr>
+<td>Make (optionnel)</td>
+<td>≥ 4</td>
+<td>Simplifie l’exécution de <code>make test</code>, <code>make data</code>, etc.</td>
+</tr>
+<tr>
+<td>Poetry (optionnel)</td>
+<td>1.8.x</td>
+<td>Alternative à <code>pip install -e .</code>.</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>Sur Windows, privilégier WSL2 ou Docker pour PostgreSQL. Pour un serveur distant, adaptez simplement l’URL <code>postgresql+psycopg://</code>.</p>
+</blockquote>
+<h2 id="2-recuperer-le-depot">2. Récupérer le dépôt</h2>
+<pre><code class="language-bash">git clone https://github.com/stephmnt/OCR_Projet05.git
+cd OCR_Projet05
+</code></pre>
+<p>Pour suivre les bonnes pratiques décrites dans <code>docs/docs/choix-techniques.md</code>, crée une branche de travail :</p>
+<pre><code class="language-bash">git checkout -b feature/&lt;mon-sujet&gt;
+</code></pre>
+<h2 id="3-preparer-lenvironnement-python">3. Préparer l’environnement Python</h2>
+<h3 id="31-virtualenv-via-venv">3.1. Virtualenv via <code>venv</code></h3>
+<pre><code class="language-bash">python3.11 -m venv .venv
+source .venv/bin/activate            # sous Windows : .venv\Scripts\Activate.ps1
+pip install --upgrade pip
+pip install -e .                     # dépendances dev (pyproject)
+pip install -r requirements.txt      # dépendances runtime Hugging Face
+</code></pre>
+<h3 id="32-option-poetry">3.2. Option Poetry</h3>
+<pre><code class="language-bash">poetry env use 3.11
+poetry install
+</code></pre>
+<p>Les scripts <code>make</code> utiliseront automatiquement l’interpréteur Python actif. Pense à activer l’environnement à chaque session.</p>
+<h2 id="4-configuration-du-projet">4. Configuration du projet</h2>
+<ol>
+<li>Copie <code>projet_05/settings.yml</code> si besoin vers un fichier spécifique et renseigne les chemins de fichiers bruts (<code>data/raw/</code> par défaut).</li>
+<li>Exporte les variables d’environnement si nécessaire :</li>
+</ol>
+<pre><code class="language-bash">export PROJET05_DATABASE_URL="postgresql+psycopg://postgres:postgres@localhost:5432/projet05"
+export PROJET05_TEST_DATABASE_URL="postgresql+psycopg://postgres:postgres@localhost:5432/projet05_test"
+export PROJET05_SETTINGS="/chemin/vers/mon_settings.yml"   # optionnel
+</code></pre>
+<p>Pour la prod (Hugging Face, CI/CD), configure également <code>HF_TOKEN</code> (secret GitHub Actions) et les variables <code>PROJET05_DATABASE_URL</code>, <code>PROJET05_SETTINGS</code> côté Space.</p>
+<h2 id="5-initialiser-postgresql">5. Initialiser PostgreSQL</h2>
+<ol>
+<li>Création du rôle et de la base locale (exemple Homebrew macOS) :</li>
+</ol>
+<pre><code class="language-bash">/opt/homebrew/opt/postgresql@17/bin/createuser -s postgres
+/opt/homebrew/opt/postgresql@17/bin/psql -d postgres -c "ALTER USER postgres WITH PASSWORD 'postgres';"
+/opt/homebrew/opt/postgresql@17/bin/createdb -O postgres projet05
+</code></pre>
+<ol>
+<li>Peupler les tables avec les CSV <code>data/raw/extrait_*.csv</code> :</li>
+</ol>
+<pre><code class="language-bash">python -m scripts.init_db
+# ou
+make data
+</code></pre>
+<p>Le script crée les tables <code>sirh</code>, <code>evaluation</code>, <code>sond</code>, <code>prediction_logs</code> puis insère les données brutes. Vérifie les logs générés dans <code>logs/pipeline_logs</code>.</p>
+<h2 id="6-pipeline-data-entrainement">6. Pipeline data &amp; entraînement</h2>
+<h3 id="61-pipeline-complet">6.1. Pipeline complet</h3>
+<pre><code class="language-bash">python main.py
+</code></pre>
+<p>Cette commande :</p>
+<ol>
+<li>Recrée la base (<code>scripts.init_db</code>).</li>
+<li>Fusionne les sources via <code>projet_05/dataset.py</code>.</li>
+<li>Applique les features (<code>projet_05/features.py</code>) et exporte <code>data/processed/dataset.csv</code> + <code>schema.json</code>.</li>
+<li>Entraîne le modèle (<code>projet_05/modeling/train.py</code>), sauvegarde <code>models/best_model.joblib</code> et <code>models/best_model_meta.json</code>.</li>
+</ol>
+<h3 id="62-etapes-unitaires">6.2. Étapes unitaires</h3>
+<pre><code class="language-bash">python -m projet_05.dataset          # génère data/interim/merged.csv
+python -m projet_05.features         # génère data/processed/dataset.csv
+python -m projet_05.modeling.train   # met à jour models/
+python -m projet_05.modeling.predict --features data/processed/dataset.csv
+</code></pre>
+<p>Le module <code>predict</code> produit un CSV <code>data/processed/predictions.csv</code> utile pour valider l’inférence CLI.</p>
+<h2 id="7-lancer-lapplication-gradio">7. Lancer l’application Gradio</h2>
+<pre><code class="language-bash">python app.py
+</code></pre>
+<ul>
+<li>La console affiche l’URL locale (ex. <code>http://127.0.0.1:7860</code>).</li>
+<li>Les logs utilisateur sont enregistrés dans la table <code>prediction_logs</code> si la variable <code>PROJET05_DATABASE_URL</code> est définie.</li>
+<li>Pour exécuter sur Hugging Face Spaces :</li>
+<li>Crée une Space “Gradio”.</li>
+<li>Pousse <code>app.py</code>, <code>models/</code>, <code>data/processed/schema.json</code>, <code>requirements.txt</code>.</li>
+<li>Renseigne <code>HF_TOKEN</code> si tu utilises GitHub Actions (<code>.github/workflows/deploy.yml</code>).</li>
+</ul>
+<h2 id="8-tests-et-qualite">8. Tests et qualité</h2>
+<h3 id="81-tests-pytest">8.1. Tests Pytest</h3>
+<pre><code class="language-bash">make test
+# ou
+pytest
+</code></pre>
+<ul>
+<li>La fixture <code>tests/conftest.py</code> crée la base <code>projet05_test</code>.</li>
+<li>Les logs pytest sont stockés dans <code>logs/tests_logs/&lt;timestamp&gt;.log</code>.</li>
+<li>Un rapport de couverture <code>coverage.xml</code> est généré (paramétré dans <code>pyproject.toml</code>).</li>
+</ul>
+<h3 id="82-lint-formatage">8.2. Lint / formatage</h3>
+<pre><code class="language-bash">make lint
+make format
+</code></pre>
+<p>Ces commandes utilisent Ruff pour vérifier le style et formater automatiquement.</p>
+<h2 id="9-documentation-mkdocs">9. Documentation MkDocs</h2>
+<p>La documentation (celle que tu lis) est générée par MkDocs :</p>
+<pre><code class="language-bash">pip install mkdocs mkdocs-mermaid2-plugin
+mkdocs serve
+</code></pre>
+<p>Le site statique est publié via <code>.github/workflows/static.yml</code> (GitHub Pages). Ajoute les nouveaux fichiers sous <code>docs/docs/</code> et mets à jour <code>docs/mkdocs.yml</code> si nécessaire.</p>
+<h2 id="10-cicd-deploiement-hugging-face">10. CI/CD &amp; déploiement Hugging Face</h2>
+<ol>
+<li>Configure les secrets GitHub <code>HF_TOKEN</code> (espace de destination) et éventuellement <code>PROJET05_DATABASE_URL</code>.</li>
+<li>Push sur <code>main</code> → déclenchement du workflow <code>deploy.yml</code> :</li>
+<li><code>pip install -r requirements.txt</code> + <code>pip install -e .</code></li>
+<li><code>python main.py</code></li>
+<li>Synchronisation du dépôt vers <code>https://huggingface.co/spaces/stephmnt/projet_05</code></li>
+<li>La documentation est publiée via <code>static.yml</code>.</li>
+</ol>
+<h2 id="11-depannage-rapide">11. Dépannage rapide</h2>
+<table>
+<thead>
+<tr>
+<th>Symptom</th>
+<th>Résolution</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>OperationalError: connection refused</code></td>
+<td>Vérifie que PostgreSQL écoute sur <code>localhost:5432</code> et que l’URL dans <code>settings.yml</code> est correcte.</td>
+</tr>
+<tr>
+<td><code>FileNotFoundError: data/raw/...</code></td>
+<td>Les CSV ne sont pas présents : récupère les extraits fournis ou mets à jour <code>paths</code> dans <code>settings.yml</code>.</td>
+</tr>
+<tr>
+<td><code>Gradio Error: Configuration introuvable</code></td>
+<td>Définit <code>PROJET05_SETTINGS</code> ou place <code>projet_05/settings.yml</code> dans le dépôt lors du déploiement HF.</td>
+</tr>
+<tr>
+<td><code>pytest</code> skip la base</td>
+<td>Assure-toi que <code>PROJET05_TEST_DATABASE_URL</code> est accessible et que l’utilisateur peut créer/supprimer des bases.</td>
+</tr>
+</tbody>
+</table>
+<hr/>
+<p>Tu es maintenant prêt·e à préparer les données, entraîner le modèle, lancer l’UI Gradio et déployer automatiquement sur Hugging Face. Pense à consulter <code>docs/docs/choix-techniques.md</code> pour expliquer tes choix lors de la soutenance et <code>correction.md</code> pour suivre l’état d’avancement des livrables.</p></div>
+</div>
+</div>
+<footer class="col-md-12">
+<hr/>
+<p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+</footer>
+<script src="../js/bootstrap.bundle.min.js"></script>
+<script>
             var base_url = "..",
                 shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
         </script>
-        <script src="../js/base.js"></script>
-        <script src="../search/main.js"></script>
-
-        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title" id="searchModalLabel">Search</h4>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <p>From here you can search these documents. Enter your search terms below.</p>
-                <form>
-                    <div class="form-group">
-                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
-                    </div>
-                </form>
-                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
-            </div>
-            <div class="modal-footer">
-            </div>
-        </div>
-    </div>
-</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-              <table class="table">
-                <thead>
-                  <tr>
-                    <th style="width: 20%;">Keys</th>
-                    <th>Action</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td class="help shortcut"><kbd>?</kbd></td>
-                    <td>Open this help</td>
-                  </tr>
-                  <tr>
-                    <td class="next shortcut"><kbd>n</kbd></td>
-                    <td>Next page</td>
-                  </tr>
-                  <tr>
-                    <td class="prev shortcut"><kbd>p</kbd></td>
-                    <td>Previous page</td>
-                  </tr>
-                  <tr>
-                    <td class="search shortcut"><kbd>s</kbd></td>
-                    <td>Search</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-            <div class="modal-footer">
-            </div>
-        </div>
-    </div>
+<script src="../js/base.js"></script>
+<script src="../search/main.js"></script>
+<div aria-hidden="true" aria-labelledby="searchModalLabel" class="modal" id="mkdocs_search_modal" role="dialog" tabindex="-1">
+<div class="modal-dialog modal-lg">
+<div class="modal-content">
+<div class="modal-header">
+<h4 class="modal-title" id="searchModalLabel">Search</h4>
+<button aria-label="Close" class="btn-close" data-bs-dismiss="modal" type="button"></button>
 </div>
-
-    </body>
+<div class="modal-body">
+<p>From here you can search these documents. Enter your search terms below.</p>
+<form>
+<div class="form-group">
+<input class="form-control" id="mkdocs-search-query" placeholder="Search..." title="Type search term here" type="search"/>
+</div>
+</form>
+<div data-no-results-text="No results found" id="mkdocs-search-results"></div>
+</div>
+<div class="modal-footer">
+</div>
+</div>
+</div>
+</div><div aria-hidden="true" aria-labelledby="keyboardModalLabel" class="modal" id="mkdocs_keyboard_modal" role="dialog" tabindex="-1">
+<div class="modal-dialog">
+<div class="modal-content">
+<div class="modal-header">
+<h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+<button aria-label="Close" class="btn-close" data-bs-dismiss="modal" type="button"></button>
+</div>
+<div class="modal-body">
+<table class="table">
+<thead>
+<tr>
+<th style="width: 20%;">Keys</th>
+<th>Action</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="help shortcut"><kbd>?</kbd></td>
+<td>Open this help</td>
+</tr>
+<tr>
+<td class="next shortcut"><kbd>n</kbd></td>
+<td>Next page</td>
+</tr>
+<tr>
+<td class="prev shortcut"><kbd>p</kbd></td>
+<td>Previous page</td>
+</tr>
+<tr>
+<td class="search shortcut"><kbd>s</kbd></td>
+<td>Search</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="modal-footer">
+</div>
+</div>
+</div>
+</div>
+</body>
 </html>

@@ -1,116 +1,120 @@
 <!DOCTYPE html>
-<html lang="en" data-bs-theme="light">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        
-        <meta name="author" content="Stéphane Manet">
-        
-        <link rel="shortcut icon" href="../img/favicon.ico">
-        <title>Données attendues - Documentation du projet</title>
-        <link href="../css/bootstrap.min.css" rel="stylesheet">
-        <link href="../css/fontawesome.min.css" rel="stylesheet">
-        <link href="../css/brands.min.css" rel="stylesheet">
-        <link href="../css/solid.min.css" rel="stylesheet">
-        <link href="../css/v4-font-face.min.css" rel="stylesheet">
-        <link href="../css/base.css" rel="stylesheet">
-        <link id="hljs-light" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" >
-        <link id="hljs-dark" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css" disabled>
-        <link href="../assets/_mkdocstrings.css" rel="stylesheet">
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
-        <script>hljs.highlightAll();</script> 
-    </head>
 
-    <body>
-        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
-            <div class="container">
-                <a class="navbar-brand" href="..">Documentation du projet</a>
-                <!-- Expander button -->
-                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-
-                <!-- Expanded navigation -->
-                <div id="navbar-collapse" class="navbar-collapse collapse">
-                        <!-- Main navigation -->
-                        <ul class="nav navbar-nav">
-                            <li class="nav-item">
-                                <a href=".." class="nav-link">Accueil</a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="../getting-started/" class="nav-link">Guide de démarrage</a>
-                            </li>
-                            <li class="nav-item dropdown">
-                                <a href="#" class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown"  aria-expanded="false">Référence API</a>
-                                <ul class="dropdown-menu">
-                                    
-<li>
-    <a href="../main/" class="dropdown-item">main</a>
+<html data-bs-theme="light" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="Stéphane Manet" name="author"/>
+<link href="../img/favicon.ico" rel="shortcut icon"/>
+<title>Données - Documentation du projet</title>
+<link href="../css/bootstrap.min.css" rel="stylesheet"/>
+<link href="../css/fontawesome.min.css" rel="stylesheet"/>
+<link href="../css/brands.min.css" rel="stylesheet"/>
+<link href="../css/solid.min.css" rel="stylesheet"/>
+<link href="../css/v4-font-face.min.css" rel="stylesheet"/>
+<link href="../css/base.css" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" id="hljs-light" rel="stylesheet"/>
+<link disabled="" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css" id="hljs-dark" rel="stylesheet"/>
+<link href="../assets/_mkdocstrings.css" rel="stylesheet"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+</head>
+<body>
+<div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+<div class="container">
+<a class="navbar-brand" href="..">Documentation du projet</a>
+<!-- Expander button -->
+<button aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler" data-bs-target="#navbar-collapse" data-bs-toggle="collapse" type="button">
+<span class="navbar-toggler-icon"></span>
+</button>
+<!-- Expanded navigation -->
+<div class="navbar-collapse collapse" id="navbar-collapse">
+<!-- Main navigation -->
+<ul class="nav navbar-nav">
+<li class="nav-item">
+<a class="nav-link" href="..">Accueil</a>
 </li>
-                                    
-<li>
-    <a href="../app/" class="dropdown-item">app</a>
+<li class="nav-item">
+<a class="nav-link" href="../getting-started/">Guide de démarrage</a>
 </li>
-                                    
-<li>
-    <a href="../tests/" class="dropdown-item">tests</a>
+<li class="nav-item">
+<a class="nav-link" href="../choix-techniques/">Choix techniques</a>
 </li>
-                                </ul>
-                            </li>
-                        </ul>
-
-                    <ul class="nav navbar-nav ms-md-auto">
-                        <li class="nav-item">
-                            <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#mkdocs_search_modal">
-                                <i class="fa fa-search"></i> Search
+<li class="nav-item">
+<a aria-current="page" class="nav-link active" href="./">Données</a>
+</li>
+<li class="nav-item dropdown">
+<a aria-expanded="false" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button">Référence API</a>
+<ul class="dropdown-menu">
+<li>
+<a class="dropdown-item" href="../main/">main</a>
+</li>
+<li>
+<a class="dropdown-item" href="../app/">app</a>
+</li>
+<li>
+<a class="dropdown-item" href="../tests/">tests</a>
+</li>
+</ul>
+</li>
+</ul>
+<ul class="nav navbar-nav ms-md-auto">
+<li class="nav-item">
+<a class="nav-link" data-bs-target="#mkdocs_search_modal" data-bs-toggle="modal" href="#">
+<i class="fa fa-search"></i> Search
                             </a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-
-        <div class="container">
-            <div class="row">
-                    <div class="col-md-3"><div class="navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
-    <div class="navbar-header">
-        <button type="button" class="navbar-toggler collapsed" data-bs-toggle="collapse" data-bs-target="#toc-collapse" title="Table of Contents">
-            <span class="fa fa-angle-down"></span>
-        </button>
-    </div>
-
-    
-    <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
-        <ul class="nav flex-column">
-            
-            <li class="nav-item" data-bs-level="1"><a href="#donnees-attendues" class="nav-link">Données attendues</a>
-              <ul class="nav flex-column">
-            <li class="nav-item" data-bs-level="2"><a href="#champs-numeriques" class="nav-link">Champs numériques</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-bs-level="2"><a href="#champs-categoriels-listes-deroulantes" class="nav-link">Champs catégoriels (listes déroulantes)</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-bs-level="2"><a href="#colonnes-calculees-automatiquement" class="nav-link">Colonnes calculées automatiquement</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-bs-level="2"><a href="#schema-postgresql" class="nav-link">Schéma PostgreSQL</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-              </ul>
-            </li>
-        </ul>
-    </div>
+</li>
+<li class="nav-item">
+<a class="nav-link" href="../choix-techniques/" rel="prev">
+<i class="fa fa-arrow-left"></i> Previous
+                                </a>
+</li>
+<li class="nav-item">
+<a class="nav-link" href="../main/" rel="next">
+                                    Next <i class="fa fa-arrow-right"></i>
+</a>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="container">
+<div class="row">
+<div class="col-md-3"><div class="navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+<div class="navbar-header">
+<button class="navbar-toggler collapsed" data-bs-target="#toc-collapse" data-bs-toggle="collapse" title="Table of Contents" type="button">
+<span class="fa fa-angle-down"></span>
+</button>
+</div>
+<div class="navbar-collapse collapse card bg-body-tertiary" id="toc-collapse">
+<ul class="nav flex-column">
+<li class="nav-item" data-bs-level="1"><a class="nav-link" href="#donnees-attendues">Données attendues</a>
+<ul class="nav flex-column">
+<li class="nav-item" data-bs-level="2"><a class="nav-link" href="#champs-numeriques">Champs numériques</a>
+<ul class="nav flex-column">
+</ul>
+</li>
+<li class="nav-item" data-bs-level="2"><a class="nav-link" href="#champs-categoriels-listes-deroulantes">Champs catégoriels (listes déroulantes)</a>
+<ul class="nav flex-column">
+</ul>
+</li>
+<li class="nav-item" data-bs-level="2"><a class="nav-link" href="#colonnes-calculees-automatiquement">Colonnes calculées automatiquement</a>
+<ul class="nav flex-column">
+</ul>
+</li>
+<li class="nav-item" data-bs-level="2"><a class="nav-link" href="#schema-postgresql">Schéma PostgreSQL</a>
+<ul class="nav flex-column">
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
 </div></div>
-                    <div class="col-md-9" role="main">
-
+<div class="col-md-9" role="main">
 <h1 id="donnees-attendues">Données attendues</h1>
-<p>L’interface Gradio expose trois modes d’entrée (formulaire, tableau interactif, import CSV).<br />
+<p>L’interface Gradio expose trois modes d’entrée (Formulaire unitaire, Fichier CSV fusionné, fichiers non-mergés).<br/>
 Dans tous les cas, il faut fournir les colonnes « brutes » ci-dessous ; l’application se charge ensuite de recalculer toutes les features dérivées (ratios, moyennes de satisfaction, etc.).</p>
 <h2 id="champs-numeriques">Champs numériques</h2>
 <table>
@@ -281,7 +285,7 @@ Dans tous les cas, il faut fournir les colonnes « brutes » ci-dessous ; 
 <li><code>dern_promo_par_experience</code></li>
 <li><code>evolution_note</code></li>
 </ul>
-<p>Un exemple complet de fichier à importer est disponible dans <code>data/sample_employees.csv</code>.<br />
+<p>Un exemple complet de fichier à importer est disponible dans <code>data/sample_employees.csv</code>.<br/>
 Il couvre les différents champs et peut servir de gabarit pour préparer vos propres jeux de données.</p>
 <h2 id="schema-postgresql">Schéma PostgreSQL</h2>
 <p>La base PostgreSQL comprend quatre tables durables :</p>
@@ -302,12 +306,12 @@ Il couvre les différents champs et peut servir de gabarit pour préparer vos pr
 <tr>
 <td><code>evaluation</code></td>
 <td>Notes et informations d’évaluation annuelles.</td>
-<td><code>id_employee</code> (PK), <code>note_evaluation_actuelle</code>, <code>note_evaluation_precedente</code>, <code>niveau_hierarchique_poste</code>, <code>satisfaction_*</code>, <code>heure_supplementaires</code>, <code>augementation_salaire_precedente</code>.</td>
+<td><code>eval_number</code> (PK), <code>note_evaluation_actuelle</code>, <code>note_evaluation_precedente</code>, <code>niveau_hierarchique_poste</code>, <code>satisfaction_*</code>, <code>heure_supplementaires</code>, <code>augementation_salaire_precedente</code>.</td>
 </tr>
 <tr>
 <td><code>sond</code></td>
 <td>Résultats du sondage employés + cible d’attrition.</td>
-<td><code>id_employee</code> (PK), <code>a_quitte_l_entreprise</code>, <code>nombre_participation_pee</code>, <code>nb_formations_suivies</code>, <code>distance_domicile_travail</code>, <code>niveau_education</code>, <code>domaine_etude</code>, <code>frequence_deplacement</code>, <code>annees_depuis_la_derniere_promotion</code>, etc.</td>
+<td><code>code_sondage</code> (PK), <code>a_quitte_l_entreprise</code>, <code>nombre_participation_pee</code>, <code>nb_formations_suivies</code>, <code>distance_domicile_travail</code>, <code>niveau_education</code>, <code>domaine_etude</code>, <code>frequence_deplacement</code>, <code>annees_depuis_la_derniere_promotion</code>, etc.</td>
 </tr>
 <tr>
 <td><code>prediction_logs</code></td>
@@ -316,86 +320,130 @@ Il couvre les différents champs et peut servir de gabarit pour préparer vos pr
 </tr>
 </tbody>
 </table>
-<p>Les trois premières tables sont alimentées par le script <code>python -m scripts.init_db</code> à partir des CSV bruts (<code>paths.sirh</code>, <code>paths.evaluation</code>, <code>paths.sondage</code>).<br />
+<p>Les trois premières tables sont alimentées par le script <code>python -m scripts.init_db</code> à partir des CSV bruts (<code>paths.sirh</code>, <code>paths.evaluation</code>, <code>paths.sondage</code>).<br/>
 <code>prediction_logs</code> est auto-alimentée par <code>app.py</code> lors de chaque prédiction, ce qui permet de tracer les usages et de recalibrer le modèle.</p>
+<div class="mermaid">erDiagram
+    sirh ||--|| evaluation : "id_employee"
+    sirh ||--|| sond : "code_sondage"
+    sirh ||--o{ prediction_logs : "eval_number"
+
+    sirh {
+        Int id_employee PK
+        Float age
+        Float revenu_mensuel
+        String departement
+        String poste
+        Float annees_dans_l_entreprise
+        Float annees_dans_le_poste_actuel
+    }
+
+    evaluation {
+        Int id_employee PK
+        Float note_evaluation_actuelle
+        Float note_evaluation_precedente
+        Float niveau_hierarchique_poste
+        Float satisfaction_employee_environnement
+        String heure_supplementaires
+        String augementation_salaire_precedente
+    }
+
+    sond {
+        Int id_employee PK
+        String a_quitte_l_entreprise
+        Float nombre_participation_pee
+        Float nb_formations_suivies
+        Float distance_domicile_travail
+        Float niveau_education
+        String domaine_etude
+        Float annees_depuis_la_derniere_promotion
+    }
+
+    prediction_logs {
+        Int log_id PK
+        DateTime created_at
+        Int id_employee
+        String source
+        Float probability
+        Int decision
+        Float threshold
+    }
+</div>
 <blockquote>
 <p>L’ensemble du pipeline (<code>dataset.py</code>, <code>app.py</code>, <code>scripts/init_db.py</code>) repose sur la même URL PostgreSQL (<code>database.url</code> dans <code>settings.yml</code>). Veillez à fournir un utilisateur disposant des droits <code>CREATE</code>, <code>INSERT</code> et <code>DROP</code> sur le schéma indiqué.</p>
 </blockquote></div>
-            </div>
-        </div>
-
-        <footer class="col-md-12">
-            <hr>
-            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
-        </footer>
-        <script src="../js/bootstrap.bundle.min.js"></script>
-        <script>
+</div>
+</div>
+<footer class="col-md-12">
+<hr/>
+<p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+</footer>
+<script src="../js/bootstrap.bundle.min.js"></script>
+<script>
             var base_url = "..",
                 shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
         </script>
-        <script src="../js/base.js"></script>
-        <script src="../search/main.js"></script>
-
-        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title" id="searchModalLabel">Search</h4>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <p>From here you can search these documents. Enter your search terms below.</p>
-                <form>
-                    <div class="form-group">
-                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
-                    </div>
-                </form>
-                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
-            </div>
-            <div class="modal-footer">
-            </div>
-        </div>
-    </div>
-</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-              <table class="table">
-                <thead>
-                  <tr>
-                    <th style="width: 20%;">Keys</th>
-                    <th>Action</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td class="help shortcut"><kbd>?</kbd></td>
-                    <td>Open this help</td>
-                  </tr>
-                  <tr>
-                    <td class="next shortcut"><kbd>n</kbd></td>
-                    <td>Next page</td>
-                  </tr>
-                  <tr>
-                    <td class="prev shortcut"><kbd>p</kbd></td>
-                    <td>Previous page</td>
-                  </tr>
-                  <tr>
-                    <td class="search shortcut"><kbd>s</kbd></td>
-                    <td>Search</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-            <div class="modal-footer">
-            </div>
-        </div>
-    </div>
+<script src="../js/base.js"></script>
+<script src="../search/main.js"></script>
+<div aria-hidden="true" aria-labelledby="searchModalLabel" class="modal" id="mkdocs_search_modal" role="dialog" tabindex="-1">
+<div class="modal-dialog modal-lg">
+<div class="modal-content">
+<div class="modal-header">
+<h4 class="modal-title" id="searchModalLabel">Search</h4>
+<button aria-label="Close" class="btn-close" data-bs-dismiss="modal" type="button"></button>
 </div>
-
-    </body>
+<div class="modal-body">
+<p>From here you can search these documents. Enter your search terms below.</p>
+<form>
+<div class="form-group">
+<input class="form-control" id="mkdocs-search-query" placeholder="Search..." title="Type search term here" type="search"/>
+</div>
+</form>
+<div data-no-results-text="No results found" id="mkdocs-search-results"></div>
+</div>
+<div class="modal-footer">
+</div>
+</div>
+</div>
+</div><div aria-hidden="true" aria-labelledby="keyboardModalLabel" class="modal" id="mkdocs_keyboard_modal" role="dialog" tabindex="-1">
+<div class="modal-dialog">
+<div class="modal-content">
+<div class="modal-header">
+<h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+<button aria-label="Close" class="btn-close" data-bs-dismiss="modal" type="button"></button>
+</div>
+<div class="modal-body">
+<table class="table">
+<thead>
+<tr>
+<th style="width: 20%;">Keys</th>
+<th>Action</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="help shortcut"><kbd>?</kbd></td>
+<td>Open this help</td>
+</tr>
+<tr>
+<td class="next shortcut"><kbd>n</kbd></td>
+<td>Next page</td>
+</tr>
+<tr>
+<td class="prev shortcut"><kbd>p</kbd></td>
+<td>Previous page</td>
+</tr>
+<tr>
+<td class="search shortcut"><kbd>s</kbd></td>
+<td>Search</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="modal-footer">
+</div>
+</div>
+</div>
+</div>
+<script type="module">import mermaid from "https://unpkg.com/mermaid@10.4.0/dist/mermaid.esm.min.mjs";
+mermaid.initialize({});</script></body>
 </html>
