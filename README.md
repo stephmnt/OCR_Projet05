@@ -13,11 +13,11 @@ python_version: 3.11
 
 # OCR Projet 05 – Prédiction d’attrition
 
-![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/stephmnt/OCR_Projet05/deploy.yml)
-![GitHub Release Date](https://img.shields.io/github/release-date/stephmnt/OCR_Projet05?display_date=published_at&style=flat-square)
-[![project_license][https://img.shields.io/github/license/stephmnt/OCR_projet05.svg?style=for-the-badge]][https://github.com/stephmnt/OCR_Projet05/blob/main/LICENSE]
-![MkDocs][https://img.shields.io/badge/MkDocs-526CFE?logo=materialformkdocs&logoColor=fff][https://stephmnt.github.io/OCR_Projet05/]
-![[Cookie Cutter][https://img.shields.io/badge/CCDS-Project%20template-328F97?logo=cookiecutter]][https://cookiecutter-data-science.drivendata.org/]
+[![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/stephmnt/OCR_Projet05/deploy.yml)](https://github.com/stephmnt/OCR_Projet05/actions/workflows/deploy.yml)
+[![GitHub Release Date](https://img.shields.io/github/release-date/stephmnt/OCR_Projet05?display_date=published_at&style=flat-square)](https://github.com/stephmnt/OCR_Projet05/releases)
+[![project_license](https://img.shields.io/github/license/stephmnt/OCR_projet05.svg?style=for-the-badge)](https://github.com/stephmnt/OCR_Projet05/blob/main/LICENSE)
+[![MkDocs](https://img.shields.io/badge/MkDocs-526CFE?logo=materialformkdocs&logoColor=fff)](https://stephmnt.github.io/OCR_Projet05/)
+[![Cookie Cutter](https://img.shields.io/badge/CCDS-Project%20template-328F97?logo=cookiecutter)](https://cookiecutter-data-science.drivendata.org/)
 
 Ce dépôt contient le projet OCR_Projet05. Il s’agit d’une application Gradio déployable sur Hugging Face Spaces, alimentée par un pipeline de préparation de données, un entraînement automatique et des services d’inférence orientés RH (prédiction de départ d’employés).  
 
