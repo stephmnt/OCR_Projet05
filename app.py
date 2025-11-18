@@ -727,8 +727,8 @@ with gr.Blocks(title="Prédicteur d'attrition") as demo:
 
     with gr.Tab("Fichiers non-mergés"):
         gr.Markdown(
-            "Téléversez directement les trois fichiers bruts (SIRH, évaluation, sondage). "
-            "L'application reproduira automatiquement la fusion puis le scoring."
+            "Téléversez directement les trois fichiers bruts (SIRH, évaluation, sondage), l'application reproduira automatiquement la fusion puis le scoring."
+            "Des tableaux sont disponibles dans le dépôt github pour tester cette fonctionnalité : [](Un exemple de fichier à importer est disponible dans le dépôt github : [`data/raw`](https://github.com/stephmnt/OCR_Projet05/blob/main/data/raw/)."
         )
         sirh_input = gr.File(file_types=[".csv"], label="Fichier SIRH")
         evaluation_input = gr.File(file_types=[".csv"], label="Fichier Évaluation")
