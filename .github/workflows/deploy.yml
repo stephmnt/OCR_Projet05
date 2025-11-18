@@ -11,6 +11,22 @@ permissions:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    env:
+      PROJET05_DATABASE_URL: postgresql+psycopg://postgres:postgres@localhost:5432/projet05
+      PROJET05_TEST_DATABASE_URL: postgresql+psycopg://postgres:postgres@localhost:5432/projet05_test
+    services:
+      postgres:
+        image: postgres:15
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
 
     steps:
       - name: Checkout repository
@@ -26,6 +42,23 @@ jobs:
           python -m pip install --upgrade pip
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
           pip install -e .
+
+      - name: Install PostgreSQL client
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y postgresql-client
+
+      - name: Prepare databases
+        env:
+          PGPASSWORD: postgres
+        run: |
+          psql -h localhost -U postgres -c "DROP DATABASE IF EXISTS projet05;"
+          psql -h localhost -U postgres -c "DROP DATABASE IF EXISTS projet05_test;"
+          psql -h localhost -U postgres -c "CREATE DATABASE projet05;"
+          psql -h localhost -U postgres -c "CREATE DATABASE projet05_test;"
+
+      - name: Run tests
+        run: pytest
 
       - name: Préparer les données et le modèle
         run: python main.py

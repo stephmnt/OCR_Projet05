@@ -8,6 +8,7 @@ questions.md
 /data/
 runtime.txt
 /logs/
+.vscode
 
 # vim
 *.swp
