@@ -5,7 +5,9 @@
 /output/
 questions.md
 /reports/
-/data/
+/data/external/
+/data/interim/
+/data/processed/
 runtime.txt
 /logs/
 .vscode
